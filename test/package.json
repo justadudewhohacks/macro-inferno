@@ -1,0 +1,27 @@
+{
+  "name": "macro-inferno-test",
+  "version": "0.0.0",
+  "scripts": {
+    "configure": "node-gyp configure",
+    "build": "node-gyp configure build",
+    "rebuild": "node-gyp rebuild",
+    "clean": "node-gyp clean",
+    "build-and-test": "npm run build &&npm run test",
+    "test": "mocha ./test --recursive --timeout 5000"
+  },
+  "author": "justadudewhohacks",
+  "license": "ISC",
+  "gypfile": true,
+  "dependencies": {
+    "chai": "^4.1.2",
+    "macro-inferno": "file:.."
+  },
+  "devDependencies": {
+    "eslint": "^3.18.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-config-rallycoding": "^3.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3"
+  }
+}

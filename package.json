@@ -1,0 +1,22 @@
+{
+  "name": "macro-inferno",
+  "version": "0.0.0",
+  "description": "Various helpers for native node.js addon development.",
+  "keywords": [
+    "nodejs",
+    "native",
+    "addon",
+    "c++",
+    "macro",
+    "helper",
+    "util",
+    "node-gyp"
+  ],
+  "main": "./index.js",
+  "author": "justadudewhohacks",
+  "license": "ISC",
+  "gypfile": true,
+  "dependencies": {
+    "nan": "^2.7.0"
+  }
+}
