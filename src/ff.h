@@ -26,6 +26,8 @@ typedef unsigned int uint;
 #define FF_IS_UINT(val) val->IsUint32()
 #define FF_IS_INT(val) val->IsInt32()
 #define FF_IS_STRING(val) val->IsString()
+#define FF_IS_ARRAY(val) val->IsArray()
+#define FF_IS_OBJ(val) ( val->IsObject() && !FF_IS_ARRAY(val))
 
 #define FF_IS_INSTANCE(ctor, obj) Nan::New(ctor)->HasInstance(obj)
 #define FF_HAS(obj, prop) Nan::HasOwnProperty(obj, FF_NEW_STRING(prop)).FromJust()

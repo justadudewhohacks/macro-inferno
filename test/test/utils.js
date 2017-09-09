@@ -22,8 +22,8 @@ exports.values = {
   anInt: -1,
   anUint: 1,
   aString: 'a string',
-  anEmptyObject: {},
-  anEmptyArray: [],
+  anArray: ['foo'],
+  anObject: { foo: true },
 
   aBoolDefault: false,
   aNumberDefault: -0.1,

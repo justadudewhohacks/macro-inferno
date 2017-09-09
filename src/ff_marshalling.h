@@ -4,7 +4,7 @@
 #define __FF_MARSHALLING_H__
 
 #define FF_TYPE(name, type, assertType, castType) \
-	FF_##name {																			\
+	FF_##name##_TYPE {															\
 		bool checkType(FF_VAL val) {									\
 			return assertType(val);											\
 		}																							\
@@ -19,12 +19,16 @@ struct FF_TYPE(NUMBER, double, FF_IS_NUMBER, FF_CAST_NUMBER);
 struct FF_TYPE(UINT, uint, FF_IS_UINT, FF_CAST_UINT);
 struct FF_TYPE(INT, int, FF_IS_INT, FF_CAST_INT);
 struct FF_TYPE(STRING, std::string, FF_IS_STRING, FF_CAST_STRING);
+struct FF_TYPE(ARRAY, FF_ARR, FF_IS_ARRAY, FF_CAST_ARRAY);
+struct FF_TYPE(OBJECT, FF_OBJ, FF_IS_OBJ, FF_CAST_OBJ);
 
-static FF_BOOL ff_bool = FF_BOOL();
-static FF_NUMBER ff_number = FF_NUMBER();
-static FF_UINT ff_uint = FF_UINT();
-static FF_INT ff_int = FF_INT();
-static FF_STRING ff_string = FF_STRING();
+static FF_BOOL_TYPE ff_bool = FF_BOOL_TYPE();
+static FF_NUMBER_TYPE ff_number = FF_NUMBER_TYPE();
+static FF_UINT_TYPE ff_uint = FF_UINT_TYPE();
+static FF_INT_TYPE ff_int = FF_INT_TYPE();
+static FF_STRING_TYPE ff_string = FF_STRING_TYPE();
+static FF_ARRAY_TYPE ff_array_type = FF_ARRAY_TYPE();
+static FF_OBJECT_TYPE ff_obj_type = FF_OBJECT_TYPE();
 
 #define FF_UNPACK_ARRAY(var, arr, type, ffType) \
 	std::vector<type> var;												\
