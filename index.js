@@ -1,1 +1,1 @@
-console.log(require('path').join(__dirname, '/src'));
+console.log(require('path').join(__dirname, 'src'));

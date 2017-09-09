@@ -1,43 +1,27 @@
-const { assert, expect } = require('chai');
+const { expect } = require('chai');
 const dut = require('../dut');
+const {
+  assertErrorMsg,
+  getArgTypeErrMsg,
+  values
+} = require('./utils');
 
-const assertErrorMsg = (func, msg) => {
-  let errMsg = '';
-  try {
-    func();
-  } catch (err) {
-    errMsg = err.toString();
-  }
-  assert.include(errMsg, msg);
-};
+const {
+  aBool, aNumber, anInt, anUint, aString, anEmptyObject, anEmptyArray,
+  aBoolDefault, aNumberDefault, anIntDefault, anUintDefault, aStringDefault
+} = values;
 
-const typeErrMsg = (methodName, argN, type) => `${methodName} - expected arg ${argN} to be of type: ${type}`;
-
-const aBool = true;
-const aNumber = 0.1;
-const anInt = -1;
-const anUint = 1;
-const aString = 'a string';
-const anEmptyObject = {};
-const anEmptyArray = [];
-
-const aBoolDefault = false;
-const aNumberDefault = -0.1;
-const anIntDefault = -2;
-const anUintDefault = 2;
-const aStringDefault = 'foo';
-
-describe('argument checking and casting', () => {
+describe('ff_args - argument checking and casting', () => {
   describe('required args', () => {
     describe('arg 0 is bool', () => {
       const method = 'arg0IsBool';
       it('should require arg 0', () => {
-        assertErrorMsg(() => dut[method](), typeErrMsg(method, 0, 'BOOL'));
+        assertErrorMsg(() => dut[method](), getArgTypeErrMsg(method, 0, 'BOOL'));
       });
 
       it('should throw type error', () => {
         [aNumber, anInt, anUint, aString, anEmptyObject, anEmptyArray].forEach((val) => {
-          assertErrorMsg(() => dut[method](val), typeErrMsg(method, 0, 'BOOL'));
+          assertErrorMsg(() => dut[method](val), getArgTypeErrMsg(method, 0, 'BOOL'));
         });
       });
 
@@ -49,12 +33,12 @@ describe('argument checking and casting', () => {
     describe('arg 0 is number', () => {
       const method = 'arg0IsNumber';
       it('should require arg 0', () => {
-        assertErrorMsg(() => dut[method](), typeErrMsg(method, 0, 'NUMBER'));
+        assertErrorMsg(() => dut[method](), getArgTypeErrMsg(method, 0, 'NUMBER'));
       });
 
       it('should throw type error', () => {
         [aBool, aString, anEmptyObject, anEmptyArray].forEach((val) => {
-          assertErrorMsg(() => dut[method](val), typeErrMsg(method, 0, 'NUMBER'));
+          assertErrorMsg(() => dut[method](val), getArgTypeErrMsg(method, 0, 'NUMBER'));
         });
       });
 
@@ -74,12 +58,12 @@ describe('argument checking and casting', () => {
     describe('arg 0 is int', () => {
       const method = 'arg0IsInt';
       it('should require arg 0', () => {
-        assertErrorMsg(() => dut[method](), typeErrMsg(method, 0, 'INT'));
+        assertErrorMsg(() => dut[method](), getArgTypeErrMsg(method, 0, 'INT'));
       });
 
       it('should throw type error', () => {
         [aBool, aNumber, aString, anEmptyObject, anEmptyArray].forEach((val) => {
-          assertErrorMsg(() => dut[method](val), typeErrMsg(method, 0, 'INT'));
+          assertErrorMsg(() => dut[method](val), getArgTypeErrMsg(method, 0, 'INT'));
         });
       });
 
@@ -95,12 +79,12 @@ describe('argument checking and casting', () => {
     describe('arg 0 is uint', () => {
       const method = 'arg0IsUint';
       it('should require arg 0', () => {
-        assertErrorMsg(() => dut[method](), typeErrMsg(method, 0, 'UINT'));
+        assertErrorMsg(() => dut[method](), getArgTypeErrMsg(method, 0, 'UINT'));
       });
 
       it('should throw type error', () => {
         [aBool, aNumber, anInt, aString, anEmptyObject, anEmptyArray].forEach((val) => {
-          assertErrorMsg(() => dut[method](val), typeErrMsg(method, 0, 'UINT'));
+          assertErrorMsg(() => dut[method](val), getArgTypeErrMsg(method, 0, 'UINT'));
         });
       });
 
@@ -112,12 +96,12 @@ describe('argument checking and casting', () => {
     describe('arg 0 is string', () => {
       const method = 'arg0IsString';
       it('should require arg 0', () => {
-        assertErrorMsg(() => dut[method](), typeErrMsg(method, 0, 'STRING'));
+        assertErrorMsg(() => dut[method](), getArgTypeErrMsg(method, 0, 'STRING'));
       });
 
       it('should throw type error', () => {
         [aBool, aNumber, anInt, anUint, anEmptyObject, anEmptyArray].forEach((val) => {
-          assertErrorMsg(() => dut[method](val), typeErrMsg(method, 0, 'STRING'));
+          assertErrorMsg(() => dut[method](val), getArgTypeErrMsg(method, 0, 'STRING'));
         });
       });
 
@@ -136,7 +120,7 @@ describe('argument checking and casting', () => {
 
       it('should throw type error', () => {
         [aNumber, anInt, anUint, aString, anEmptyObject, anEmptyArray].forEach((val) => {
-          assertErrorMsg(() => dut[method](val), typeErrMsg(method, 0, 'BOOL'));
+          assertErrorMsg(() => dut[method](val), getArgTypeErrMsg(method, 0, 'BOOL'));
         });
       });
 
@@ -153,7 +137,7 @@ describe('argument checking and casting', () => {
 
       it('should throw type error', () => {
         [aBool, aString, anEmptyObject, anEmptyArray].forEach((val) => {
-          assertErrorMsg(() => dut[method](val), typeErrMsg(method, 0, 'NUMBER'));
+          assertErrorMsg(() => dut[method](val), getArgTypeErrMsg(method, 0, 'NUMBER'));
         });
       });
 
@@ -170,7 +154,7 @@ describe('argument checking and casting', () => {
 
       it('should throw type error', () => {
         [aBool, aNumber, aString, anEmptyObject, anEmptyArray].forEach((val) => {
-          assertErrorMsg(() => dut[method](val), typeErrMsg(method, 0, 'INT'));
+          assertErrorMsg(() => dut[method](val), getArgTypeErrMsg(method, 0, 'INT'));
         });
       });
 
@@ -187,7 +171,7 @@ describe('argument checking and casting', () => {
 
       it('should throw type error', () => {
         [aBool, aNumber, anInt, aString, anEmptyObject, anEmptyArray].forEach((val) => {
-          assertErrorMsg(() => dut[method](val), typeErrMsg(method, 0, 'UINT'));
+          assertErrorMsg(() => dut[method](val), getArgTypeErrMsg(method, 0, 'UINT'));
         });
       });
 
@@ -204,7 +188,7 @@ describe('argument checking and casting', () => {
 
       it('should throw type error', () => {
         [aBool, aNumber, anInt, anUint, anEmptyObject, anEmptyArray].forEach((val) => {
-          assertErrorMsg(() => dut[method](val), typeErrMsg(method, 0, 'STRING'));
+          assertErrorMsg(() => dut[method](val), getArgTypeErrMsg(method, 0, 'STRING'));
         });
       });
 

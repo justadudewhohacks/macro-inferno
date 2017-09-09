@@ -44,7 +44,7 @@
 
 /* js property getters */
 
-#define FF_GET(obj, prop) Nan::Get(obj, FF_NEW_VAL(prop)).ToLocalChecked()
+#define FF_GET(obj, prop) Nan::Get(obj, FF_NEW_STRING(prop)).ToLocalChecked()
 
 #define FF_REQUIRE_PROP(obj, prop)														\
 	if (!FF_HAS(obj, prop)) {																		\

@@ -13,11 +13,6 @@ public:
 		Nan::SetMethod(target, "arg0IsOptUint", arg0IsOptUint);
 		Nan::SetMethod(target, "arg0IsOptInt", arg0IsOptInt);
 		Nan::SetMethod(target, "arg0IsOptString", arg0IsOptString);
-		Nan::SetMethod(target, "requireArg0optArg1Bool", requireArg0optArg1Bool);
-		Nan::SetMethod(target, "requireArg0optArg1Number", requireArg0optArg1Number);
-		Nan::SetMethod(target, "requireArg0optArg1Uint", requireArg0optArg1Uint);
-		Nan::SetMethod(target, "requireArg0optArg1Int", requireArg0optArg1Int);
-		Nan::SetMethod(target, "requireArg0optArg1String", requireArg0optArg1String);
 	}
 
 	static NAN_METHOD(arg0IsBool) {
@@ -47,7 +42,7 @@ public:
 	static NAN_METHOD(arg0IsString) {
 		FF_METHOD_CONTEXT("arg0IsString");
 		FF_ARG_STRING(0, std::string arg);
-		FF_RETURN(FF_NEW_VAL(arg));
+		FF_RETURN(FF_NEW_STRING(arg));
 	}
 
 	static NAN_METHOD(arg0IsOptBool) {
@@ -77,38 +72,6 @@ public:
 	static NAN_METHOD(arg0IsOptString) {
 		FF_METHOD_CONTEXT("arg0IsOptString");
 		FF_ARG_STRING_IFDEF(0, std::string arg, "foo");
-		FF_RETURN(FF_NEW_VAL(arg));
+		FF_RETURN(FF_NEW_STRING(arg));
 	}
-
-	static NAN_METHOD(requireArg0optArg1Bool) {
-		FF_METHOD_CONTEXT("requireArg0optArg1Bool");
-		FF_ARG_BOOL(0, bool arg0);
-		FF_ARG_BOOL_IFDEF(1, bool arg1, false);
-	}
-
-	static NAN_METHOD(requireArg0optArg1Number) {
-		FF_METHOD_CONTEXT("requireArg0optArg1Number");
-		FF_ARG_NUMBER(0, double arg0);
-		FF_ARG_NUMBER_IFDEF(1, double arg1, 0);
-	}
-
-	static NAN_METHOD(requireArg0optArg1Uint) {
-		FF_METHOD_CONTEXT("requireArg0optArg1Uint");
-		FF_ARG_UINT(0, uint arg0);
-		FF_ARG_UINT_IFDEF(1, uint arg1, 0);
-	}
-
-	static NAN_METHOD(requireArg0optArg1Int) {
-		FF_METHOD_CONTEXT("requireArg0optArg1Int");
-		FF_ARG_INT(0, int arg0);
-		FF_ARG_INT_IFDEF(1, int arg1, 0);
-	}
-
-	static NAN_METHOD(requireArg0optArg1String) {
-		FF_METHOD_CONTEXT("requireArg0optArg1String");
-		FF_ARG_STRING(0, std::string arg0);
-		FF_ARG_STRING_IFDEF(1, std::string arg1, "");
-	}
-
-
 };

@@ -18,7 +18,7 @@ struct FF_TYPE(BOOL, bool, FF_IS_BOOL, FF_CAST_BOOL);
 struct FF_TYPE(NUMBER, double, FF_IS_NUMBER, FF_CAST_NUMBER);
 struct FF_TYPE(UINT, uint, FF_IS_UINT, FF_CAST_UINT);
 struct FF_TYPE(INT, int, FF_IS_INT, FF_CAST_INT);
-struct FF_TYPE(STRING, std::string, FF_IS_STRING, FF_TO_STRING);
+struct FF_TYPE(STRING, std::string, FF_IS_STRING, FF_CAST_STRING);
 
 static FF_BOOL ff_bool = FF_BOOL();
 static FF_NUMBER ff_number = FF_NUMBER();
@@ -39,6 +39,12 @@ static FF_STRING ff_string = FF_STRING();
 		vec.push_back(ffType.cast(ff_val));																																												\
 	}
 
+#define FF_PACK_ARRAY_(var, vec, create)	\
+	FF_ARR var = FF_NEW_ARRAY(vec.size());	\
+	for (int i = 0; i < vec.size(); i++) {	\
+		arr->Set(i, create(vec.at(i)));				\
+	}
+
 #define FF_UNPACK_UINT_ARRAY(var, arr) FF_UNPACK_ARRAY(var, arr, uint, ff_uint)
 #define FF_UNPACK_INT_ARRAY(var, arr) FF_UNPACK_ARRAY(var, arr, int, ff_int)
 #define FF_UNPACK_BOOL_ARRAY(var, arr) FF_UNPACK_ARRAY(var, arr, bool, ff_bool)
@@ -50,5 +56,8 @@ static FF_STRING ff_string = FF_STRING();
 #define FF_UNPACK_BOOL_ARRAY_TO(vec, arr) FF_UNPACK_ARRAY_TO(vec, arr, ff_bool)
 #define FF_UNPACK_NUMBER_ARRAY_TO(vec, arr) FF_UNPACK_ARRAY_TO(vec, arr, ff_number)
 #define FF_UNPACK_STRING_ARRAY_TO(vec, arr) FF_UNPACK_ARRAY_TO(vec, arr, ff_string)
+
+#define FF_PACK_ARRAY(var, vec) FF_PACK_ARRAY_(var, vec, Nan::New)
+#define FF_PACK_STRING_ARRAY(var, vec) FF_PACK_ARRAY_(var, vec, FF_NEW_STRING)
 
 #endif
