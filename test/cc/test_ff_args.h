@@ -10,6 +10,7 @@ public:
 		Nan::SetMethod(target, "arg0IsString", arg0IsString);
 		Nan::SetMethod(target, "arg0IsArray", arg0IsArray);
 		Nan::SetMethod(target, "arg0IsObject", arg0IsObject);
+
 		Nan::SetMethod(target, "arg0IsOptBool", arg0IsOptBool);
 		Nan::SetMethod(target, "arg0IsOptNumber", arg0IsOptNumber);
 		Nan::SetMethod(target, "arg0IsOptUint", arg0IsOptUint);

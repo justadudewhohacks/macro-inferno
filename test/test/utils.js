@@ -14,6 +14,10 @@ const getTypeErrMsg = type => `to be of type: ${type}`;
 
 exports.getArgTypeErrMsg = (methodName, argN, type) => `${methodName} - expected arg ${argN} ${getTypeErrMsg(type)}`;
 
+exports.getPropRequiredErrMsg = (methodName, prop) => `${methodName} - object has no property: ${prop}`;
+
+exports.getPropTypeErrMsg = (methodName, prop, type) => `${methodName} - expected property: ${prop} ${getTypeErrMsg(type)}`;
+
 exports.getTypeErrMsg = getTypeErrMsg;
 
 exports.values = {

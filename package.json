@@ -15,7 +15,10 @@
   "main": "./index.js",
   "author": "justadudewhohacks",
   "license": "ISC",
-  "gypfile": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justadudewhohacks/macro-inferno"
+  },
   "dependencies": {
     "nan": "^2.7.0"
   }
