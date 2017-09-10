@@ -46,7 +46,7 @@ static FF_OBJECT_TYPE ff_obj_type = FF_OBJECT_TYPE();
 #define FF_PACK_ARRAY_(var, vec, create)	\
 	FF_ARR var = FF_NEW_ARRAY(vec.size());	\
 	for (int i = 0; i < vec.size(); i++) {	\
-		arr->Set(i, create(vec.at(i)));				\
+		var->Set(i, create(vec.at(i)));				\
 	}
 
 #define FF_UNPACK_UINT_ARRAY(var, arr) FF_UNPACK_ARRAY(var, arr, uint, ff_uint)
@@ -61,7 +61,10 @@ static FF_OBJECT_TYPE ff_obj_type = FF_OBJECT_TYPE();
 #define FF_UNPACK_NUMBER_ARRAY_TO(vec, arr) FF_UNPACK_ARRAY_TO(vec, arr, ff_number)
 #define FF_UNPACK_STRING_ARRAY_TO(vec, arr) FF_UNPACK_ARRAY_TO(vec, arr, ff_string)
 
+#define FF_IDENTITY_FUNC(arg) arg
 #define FF_PACK_ARRAY(var, vec) FF_PACK_ARRAY_(var, vec, Nan::New)
 #define FF_PACK_STRING_ARRAY(var, vec) FF_PACK_ARRAY_(var, vec, FF_NEW_STRING)
+#define FF_PACK_ARRAY_ARRAY(var, vec) FF_PACK_ARRAY_(var, vec, FF_IDENTITY_FUNC)
+#define FF_PACK_OBJ_ARRAY(var, vec) FF_PACK_ARRAY_(var, vec, FF_IDENTITY_FUNC)
 
 #endif

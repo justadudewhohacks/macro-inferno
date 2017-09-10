@@ -18,6 +18,16 @@ public:
 		Nan::SetMethod(target, "arg0IsOptString", arg0IsOptString);
 		Nan::SetMethod(target, "arg0IsOptArray", arg0IsOptArray);
 		Nan::SetMethod(target, "arg0IsOptObject", arg0IsOptObject);
+
+		Nan::SetMethod(target, "arg0IsBoolArray", arg0IsBoolArray);
+		Nan::SetMethod(target, "arg0IsNumberArray", arg0IsNumberArray);
+		Nan::SetMethod(target, "arg0IsUintArray", arg0IsUintArray);
+		Nan::SetMethod(target, "arg0IsIntArray", arg0IsIntArray);
+		Nan::SetMethod(target, "arg0IsStringArray", arg0IsStringArray);
+		Nan::SetMethod(target, "arg0IsArrayArray", arg0IsArrayArray);
+		Nan::SetMethod(target, "arg0IsObjectArray", arg0IsObjectArray);
+
+		Nan::SetMethod(target, "arg0IsOptBoolArray", arg0IsOptBoolArray);
 	}
 
 	static NAN_METHOD(arg0IsBool) {
@@ -107,4 +117,103 @@ public:
 		FF_ARG_OBJ_IFDEF(0, FF_OBJ arg, obj);
 		FF_RETURN(arg);
 	}
+
+	static NAN_METHOD(arg0IsBoolArray) {
+		FF_METHOD_CONTEXT("arg0IsBoolArray");
+		FF_ARG_UNPACK_BOOL_ARRAY(0, vec);
+		FF_PACK_ARRAY(ret, vec);
+		FF_RETURN(ret);
+	}
+
+	static NAN_METHOD(arg0IsNumberArray) {
+		FF_METHOD_CONTEXT("arg0IsNumberArray");
+		FF_ARG_UNPACK_NUMBER_ARRAY(0, vec);
+		FF_PACK_ARRAY(ret, vec);
+		FF_RETURN(ret);
+	}
+
+	static NAN_METHOD(arg0IsUintArray) {
+		FF_METHOD_CONTEXT("arg0IsUintArray");
+		FF_ARG_UNPACK_UINT_ARRAY(0, vec);
+		FF_PACK_ARRAY(ret, vec);
+		FF_RETURN(ret);
+	}
+
+	static NAN_METHOD(arg0IsIntArray) {
+		FF_METHOD_CONTEXT("arg0IsIntArray");
+		FF_ARG_UNPACK_INT_ARRAY(0, vec);
+		FF_PACK_ARRAY(ret, vec);
+		FF_RETURN(ret);
+	}
+
+	static NAN_METHOD(arg0IsStringArray) {
+		FF_METHOD_CONTEXT("arg0IsStringArray");
+		FF_ARG_UNPACK_STRING_ARRAY(0, vec);
+		FF_PACK_STRING_ARRAY(ret, vec);
+		FF_RETURN(ret);
+	}
+
+	static NAN_METHOD(arg0IsArrayArray) {
+		FF_METHOD_CONTEXT("arg0IsArrayArray");
+		FF_ARG_UNPACK_ARRAY_ARRAY(0, vec);
+		FF_PACK_ARRAY_ARRAY(ret, vec);
+		FF_RETURN(ret);
+	}
+
+	static NAN_METHOD(arg0IsObjectArray) {
+		FF_METHOD_CONTEXT("arg0IsObjectArray");
+		FF_ARG_UNPACK_OBJECT_ARRAY(0, vec);
+		FF_PACK_OBJ_ARRAY(ret, vec);
+		FF_RETURN(ret);
+	}
+
+	static NAN_METHOD(arg0IsOptBoolArray) {
+		FF_METHOD_CONTEXT("arg0IsOptBoolArray");
+		FF_ARG_UNPACK_BOOL_ARRAY_IFDEF(0, vec, std::vector<bool>());
+		FF_PACK_ARRAY(ret, vec);
+		FF_RETURN(ret);
+	}
+
+	static NAN_METHOD(arg0IsOptNumberArray) {
+		FF_METHOD_CONTEXT("arg0IsOptNumberArray");
+		FF_ARG_UNPACK_NUMBER_ARRAY_IFDEF(0, vec, std::vector<double>());
+		FF_PACK_ARRAY(ret, vec);
+		FF_RETURN(ret);
+	}
+
+	static NAN_METHOD(arg0IsOptIntArray) {
+		FF_METHOD_CONTEXT("arg0IsOptIntArray");
+		FF_ARG_UNPACK_INT_ARRAY_IFDEF(0, vec, std::vector<int>());
+		FF_PACK_ARRAY(ret, vec);
+		FF_RETURN(ret);
+	}
+
+	static NAN_METHOD(arg0IsOptUintArray) {
+		FF_METHOD_CONTEXT("arg0IsOptUintArray");
+		FF_ARG_UNPACK_UINT_ARRAY_IFDEF(0, vec, std::vector<uint>());
+		FF_PACK_ARRAY(ret, vec);
+		FF_RETURN(ret);
+	}
+
+	static NAN_METHOD(arg0IsOptStringArray) {
+		FF_METHOD_CONTEXT("arg0IsOptStringArray");
+		FF_ARG_UNPACK_STRING_ARRAY_IFDEF(0, vec, std::vector<std::string>());
+		FF_PACK_STRING_ARRAY(ret, vec);
+		FF_RETURN(ret);
+	}
+
+	static NAN_METHOD(arg0IsOptArrayArray) {
+		FF_METHOD_CONTEXT("arg0IsOptArrayArray");
+		FF_ARG_UNPACK_ARRAY_ARRAY_IFDEF(0, vec, std::vector<FF_ARR>());
+		FF_PACK_ARRAY_ARRAY(ret, vec);
+		FF_RETURN(ret);
+	}
+
+	static NAN_METHOD(arg0IsOptObjectArray) {
+		FF_METHOD_CONTEXT("arg0IsOptObjectArray");
+		FF_ARG_UNPACK_OBJECT_ARRAY_IFDEF(0, vec, std::vector<FF_OBJ>());
+		FF_PACK_OBJ_ARRAY(ret, vec);
+		FF_RETURN(ret);
+	}
+
 };

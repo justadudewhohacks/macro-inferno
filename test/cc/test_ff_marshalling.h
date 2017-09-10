@@ -44,35 +44,35 @@ public:
 	static NAN_METHOD(unpackAndPackBoolArray) {
 		FF_METHOD_CONTEXT("unpackAndPackBoolArray");
 		FF_UNPACK_BOOL_ARRAY(vec, FF_CAST_ARRAY(info[0]));
-		FF_PACK_ARRAY(arr, vec);
-		FF_RETURN(arr);
+		FF_PACK_ARRAY(ret, vec);
+		FF_RETURN(ret);
 	}
 
 	static NAN_METHOD(unpackAndPackNumberArray) {
 		FF_METHOD_CONTEXT("unpackAndPackNumberArray");
 		FF_UNPACK_NUMBER_ARRAY(vec, FF_CAST_ARRAY(info[0]));
-		FF_PACK_ARRAY(arr, vec);
-		FF_RETURN(arr);
+		FF_PACK_ARRAY(ret, vec);
+		FF_RETURN(ret);
 	}
 
 	static NAN_METHOD(unpackAndPackIntArray) {
 		FF_METHOD_CONTEXT("unpackAndPackIntArray");
 		FF_UNPACK_INT_ARRAY(vec, FF_CAST_ARRAY(info[0]));
-		FF_PACK_ARRAY(arr, vec);
-		FF_RETURN(arr);
+		FF_PACK_ARRAY(ret, vec);
+		FF_RETURN(ret);
 	}
 
 	static NAN_METHOD(unpackAndPackUintArray) {
 		FF_METHOD_CONTEXT("unpackAndPackUintArray");
 		FF_UNPACK_UINT_ARRAY(vec, FF_CAST_ARRAY(info[0]));
-		FF_PACK_ARRAY(arr, vec);
-		FF_RETURN(arr);
+		FF_PACK_ARRAY(ret, vec);
+		FF_RETURN(ret);
 	}
 
 	static NAN_METHOD(unpackAndPackStringArray) {
 		FF_METHOD_CONTEXT("unpackAndPackStringArray");
 		FF_UNPACK_STRING_ARRAY(vec, FF_CAST_ARRAY(info[0]));
-		FF_PACK_STRING_ARRAY(arr, vec);
-		FF_RETURN(arr);
+		FF_PACK_STRING_ARRAY(ret, vec);
+		FF_RETURN(ret);
 	}
 };

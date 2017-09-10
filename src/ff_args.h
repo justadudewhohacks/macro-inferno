@@ -46,4 +46,41 @@
 #define FF_ARG_ARRAY_IFDEF(argN, var, defaultValue) FF_ARG_IFDEF(argN, var, ff_array_type, defaultValue)
 #define FF_ARG_OBJ_IFDEF(argN, var, defaultValue) FF_ARG_IFDEF(argN, var, ff_obj_type, defaultValue)
 
+/* unpack array args */
+#define FF_ARG_UNPACK_ARRAY_TO(argN, vec, ffType)	\
+	do {																						\
+		FF_ARR ff_tmpArr;															\
+		FF_ARG_ARRAY(argN, ff_tmpArr)									\
+		FF_UNPACK_ARRAY_TO(vec, ff_tmpArr, ffType)		\
+	} while (0);
+
+#define FF_ARG_UNPACK_ARRAY(argN, var, type, ffType)	\
+	std::vector<type> vec;															\
+	FF_ARG_UNPACK_ARRAY_TO(argN, vec, ffType)
+
+#define FF_ARG_UNPACK_ARRAY_IFDEF(argN, var, type, ffType, defaultValue)		\
+	std::vector<type> vec;																										\
+	if(FF_HAS_ARG(argN)) {																										\
+		FF_REQUIRE_ARG_TYPE(argN, ff_array_type, false)													\
+		FF_ARG_UNPACK_ARRAY_TO(argN, vec, ffType)																\
+	}	else {																																	\
+		vec = defaultValue;																											\
+	}
+
+#define FF_ARG_UNPACK_BOOL_ARRAY(argN, var) FF_ARG_UNPACK_ARRAY(argN, var, bool, ff_bool)
+#define FF_ARG_UNPACK_NUMBER_ARRAY(argN, var) FF_ARG_UNPACK_ARRAY(argN, var, double, ff_number)
+#define FF_ARG_UNPACK_UINT_ARRAY(argN, var) FF_ARG_UNPACK_ARRAY(argN, var, uint, ff_uint)
+#define FF_ARG_UNPACK_INT_ARRAY(argN, var) FF_ARG_UNPACK_ARRAY(argN, var, int, ff_int)
+#define FF_ARG_UNPACK_STRING_ARRAY(argN, var) FF_ARG_UNPACK_ARRAY(argN, var, std::string, ff_string)
+#define FF_ARG_UNPACK_ARRAY_ARRAY(argN, var) FF_ARG_UNPACK_ARRAY(argN, var, FF_ARR, ff_array_type)
+#define FF_ARG_UNPACK_OBJECT_ARRAY(argN, var) FF_ARG_UNPACK_ARRAY(argN, var, FF_OBJ, ff_obj_type)
+
+#define FF_ARG_UNPACK_BOOL_ARRAY_IFDEF(argN, var, defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(argN, var, bool, ff_bool, defaultValue)
+#define FF_ARG_UNPACK_NUMBER_ARRAY_IFDEF(argN, var, defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(argN, var, double, ff_number, defaultValue)
+#define FF_ARG_UNPACK_UINT_ARRAY_IFDEF(argN, var, defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(argN, var, uint, ff_uint, defaultValue)
+#define FF_ARG_UNPACK_INT_ARRAY_IFDEF(argN, var, defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(argN, var, int, ff_int, defaultValue)
+#define FF_ARG_UNPACK_STRING_ARRAY_IFDEF(argN, var, defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(argN, var, std::string, ff_string, defaultValue)
+#define FF_ARG_UNPACK_ARRAY_ARRAY_IFDEF(argN, var, defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(argN, var, FF_ARR, ff_array_type, defaultValue)
+#define FF_ARG_UNPACK_OBJECT_ARRAY_IFDEF(argN, var, defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(argN, var, FF_OBJ, ff_obj_type, defaultValue)
+
 #endif

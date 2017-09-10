@@ -26,7 +26,7 @@ describe('ff_marshalling - packing and unpacking', () => {
       it('should throw type error', () => {
         [aNumber, anInt, anUint, aString].forEach(
           val => assertErrorMsg(
-            () => dut.unpackBoolArray(aBoolArray.slice().concat(val)),
+            () => dut.unpackBoolArray(aBoolArray.concat(val)),
             getTypeErrMsg('BOOL')
           )
         );
@@ -41,7 +41,7 @@ describe('ff_marshalling - packing and unpacking', () => {
       it('should throw type error', () => {
         [aBool, aString].forEach(
           val => assertErrorMsg(
-            () => dut.unpackNumberArray(aNumberArray.slice().concat(val)),
+            () => dut.unpackNumberArray(aNumberArray.concat(val)),
             getTypeErrMsg('NUMBER')
           )
         );
@@ -56,7 +56,7 @@ describe('ff_marshalling - packing and unpacking', () => {
       it('should throw type error', () => {
         [aBool, aNumber, aString].forEach(
           val => assertErrorMsg(
-            () => dut.unpackIntArray(anIntArray.slice().concat(val)),
+            () => dut.unpackIntArray(anIntArray.concat(val)),
             getTypeErrMsg('INT')
           )
         );
@@ -71,7 +71,7 @@ describe('ff_marshalling - packing and unpacking', () => {
       it('should throw type error', () => {
         [aBool, aNumber, aString].forEach(
           val => assertErrorMsg(
-            () => dut.unpackUintArray(anUintArray.slice().concat(val)),
+            () => dut.unpackUintArray(anUintArray.concat(val)),
             getTypeErrMsg('UINT')
           )
         );
@@ -86,7 +86,7 @@ describe('ff_marshalling - packing and unpacking', () => {
       it('should throw type error', () => {
         [aBool, aNumber, anInt, anUint].forEach(
           val => assertErrorMsg(
-            () => dut.unpackStringArray(aStringArray.slice().concat(val)),
+            () => dut.unpackStringArray(aStringArray.concat(val)),
             getTypeErrMsg('STRING')
           )
         );
