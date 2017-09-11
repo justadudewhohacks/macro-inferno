@@ -1,6 +1,6 @@
 {
   "name": "macro-inferno",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A header library with various helpers for native node.js addon development.",
   "keywords": [
     "nodejs",
