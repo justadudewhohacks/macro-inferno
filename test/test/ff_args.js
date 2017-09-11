@@ -15,7 +15,7 @@ const {
 const generateRequiredArgTests = ({ type, throwForTypes, validValues }) => {
   describe(`arg 0 is ${type}`, () => {
     const method = `arg0Is${`${type[0].toUpperCase()}${type.substr(1)}`}`;
-    it('should require arg 0', () => {
+    it('should require arg 0 to be', () => {
       assertErrorMsg(() => dut[method](), getArgTypeErrMsg(method, 0, type.toUpperCase()));
     });
 
@@ -83,6 +83,44 @@ const generateArrayArgTests = ({ type, throwForTypes, validValues }) => {
       const ret = dut[method](validArray);
       expect(ret).to.be.an('array').lengthOf(5);
       expect(ret).to.have.members(validArray);
+    });
+  });
+};
+
+const generateOptionalArrayArgTests = ({ type, throwForTypes, validValues }) => {
+  describe(`arg 0 is optional array of ${type}`, () => {
+    const method = `arg0IsOpt${`${type[0].toUpperCase()}${type.substr(1)}`}Array`;
+    const validArray = Array(5).fill(validValues[0]);
+    it('should NOT require arg 0', () => {
+      expect(() => dut[method]()).not.to.throw();
+    });
+
+    it('should throw if is not an array', () => {
+      [aBool, aNumber, anInt, anUint, aString, anObject].forEach((val) => {
+        assertErrorMsg(() => dut[method](val), getArgTypeErrMsg(method, 0, 'ARRAY'));
+      });
+    });
+
+    it('should throw type error if contains value with invalid type', () => {
+      throwForTypes.forEach((val) => {
+        const invalidArray = validArray.slice();
+        invalidArray.push(val);
+        assertErrorMsg(() => dut[method](invalidArray), getTypeErrMsg(type.toUpperCase()));
+      });
+    });
+
+    it('should unpack, pack and return array', () => {
+      const ret = dut[method](validArray);
+      expect(ret).to.be.an('array').lengthOf(5);
+      expect(ret).to.have.members(validArray);
+    });
+
+    it('should return a default value', () => {
+      let assertType = (type === 'int' || type === 'uint') ? 'number' : type;
+      assertType = assertType === 'bool' ? 'boolean' : assertType;
+      const ret = dut[method]();
+      expect(ret).to.be.an('array').lengthOf(1);
+      expect(ret[0]).to.be.a(assertType);
     });
   });
 };
@@ -219,6 +257,50 @@ describe('ff_args - argument checking and casting', () => {
     });
 
     generateArrayArgTests({
+      type: 'object',
+      throwForTypes: [aBool, aNumber, anInt, anUint, aString, anArray],
+      validValues: [anObject]
+    });
+  });
+
+  describe('optional array args', () => {
+    generateOptionalArrayArgTests({
+      type: 'bool',
+      throwForTypes: [aNumber, anInt, anUint, aString, anObject, anArray],
+      validValues: [aBool]
+    });
+
+    generateOptionalArrayArgTests({
+      type: 'number',
+      throwForTypes: [aBool, aString, anObject, anArray],
+      validValues: [aNumber, anInt, anUint]
+    });
+
+    generateOptionalArrayArgTests({
+      type: 'int',
+      throwForTypes: [aBool, aNumber, aString, anObject, anArray],
+      validValues: [anInt, anUint]
+    });
+
+    generateOptionalArrayArgTests({
+      type: 'uint',
+      throwForTypes: [aBool, aNumber, anInt, aString, anObject, anArray],
+      validValues: [anUint]
+    });
+
+    generateOptionalArrayArgTests({
+      type: 'string',
+      throwForTypes: [aBool, aNumber, anInt, anUint, anObject, anArray],
+      validValues: [aString]
+    });
+
+    generateOptionalArrayArgTests({
+      type: 'array',
+      throwForTypes: [aBool, aNumber, anInt, anUint, aString, anObject],
+      validValues: [anArray]
+    });
+
+    generateOptionalArrayArgTests({
       type: 'object',
       throwForTypes: [aBool, aNumber, anInt, anUint, aString, anArray],
       validValues: [anObject]

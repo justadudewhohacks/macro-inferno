@@ -28,6 +28,12 @@ public:
 		Nan::SetMethod(target, "arg0IsObjectArray", arg0IsObjectArray);
 
 		Nan::SetMethod(target, "arg0IsOptBoolArray", arg0IsOptBoolArray);
+		Nan::SetMethod(target, "arg0IsOptNumberArray", arg0IsOptNumberArray);
+		Nan::SetMethod(target, "arg0IsOptUintArray", arg0IsOptUintArray);
+		Nan::SetMethod(target, "arg0IsOptIntArray", arg0IsOptIntArray);
+		Nan::SetMethod(target, "arg0IsOptStringArray", arg0IsOptStringArray);
+		Nan::SetMethod(target, "arg0IsOptArrayArray", arg0IsOptArrayArray);
+		Nan::SetMethod(target, "arg0IsOptObjectArray", arg0IsOptObjectArray);
 	}
 
 	static NAN_METHOD(arg0IsBool) {
@@ -104,115 +110,129 @@ public:
 
 	static NAN_METHOD(arg0IsOptArray) {
 		FF_METHOD_CONTEXT("arg0IsOptArray");
-		FF_ARR arr = FF_NEW_ARRAY(1);
-		arr->Set(0, Nan::New(true));
-		FF_ARG_ARRAY_IFDEF(0, FF_ARR arg, arr);
+		FF_ARR anArrayDefault = FF_NEW_ARRAY(1);
+		anArrayDefault->Set(0, Nan::New(true));
+		FF_ARG_ARRAY_IFDEF(0, FF_ARR arg, anArrayDefault);
 		FF_RETURN(arg);
 	}
 
 	static NAN_METHOD(arg0IsOptObject) {
 		FF_METHOD_CONTEXT("arg0IsOptObject");
-		FF_OBJ obj = FF_NEW_OBJ();
-		Nan::Set(obj, FF_NEW_STRING("default"), Nan::New(true));
-		FF_ARG_OBJ_IFDEF(0, FF_OBJ arg, obj);
+		FF_OBJ anObjDefault = FF_NEW_OBJ();
+		Nan::Set(anObjDefault, FF_NEW_STRING("default"), Nan::New(true));
+		FF_ARG_OBJ_IFDEF(0, FF_OBJ arg, anObjDefault);
 		FF_RETURN(arg);
 	}
 
 	static NAN_METHOD(arg0IsBoolArray) {
 		FF_METHOD_CONTEXT("arg0IsBoolArray");
-		FF_ARG_UNPACK_BOOL_ARRAY(0, vec);
-		FF_PACK_ARRAY(ret, vec);
+		FF_ARG_UNPACK_BOOL_ARRAY(0, vecToUnpackTo);
+		FF_PACK_ARRAY(ret, vecToUnpackTo);
 		FF_RETURN(ret);
 	}
 
 	static NAN_METHOD(arg0IsNumberArray) {
 		FF_METHOD_CONTEXT("arg0IsNumberArray");
-		FF_ARG_UNPACK_NUMBER_ARRAY(0, vec);
-		FF_PACK_ARRAY(ret, vec);
+		FF_ARG_UNPACK_NUMBER_ARRAY(0, vecToUnpackTo);
+		FF_PACK_ARRAY(ret, vecToUnpackTo);
 		FF_RETURN(ret);
 	}
 
 	static NAN_METHOD(arg0IsUintArray) {
 		FF_METHOD_CONTEXT("arg0IsUintArray");
-		FF_ARG_UNPACK_UINT_ARRAY(0, vec);
-		FF_PACK_ARRAY(ret, vec);
+		FF_ARG_UNPACK_UINT_ARRAY(0, vecToUnpackTo);
+		FF_PACK_ARRAY(ret, vecToUnpackTo);
 		FF_RETURN(ret);
 	}
 
 	static NAN_METHOD(arg0IsIntArray) {
 		FF_METHOD_CONTEXT("arg0IsIntArray");
-		FF_ARG_UNPACK_INT_ARRAY(0, vec);
-		FF_PACK_ARRAY(ret, vec);
+		FF_ARG_UNPACK_INT_ARRAY(0, vecToUnpackTo);
+		FF_PACK_ARRAY(ret, vecToUnpackTo);
 		FF_RETURN(ret);
 	}
 
 	static NAN_METHOD(arg0IsStringArray) {
 		FF_METHOD_CONTEXT("arg0IsStringArray");
-		FF_ARG_UNPACK_STRING_ARRAY(0, vec);
-		FF_PACK_STRING_ARRAY(ret, vec);
+		FF_ARG_UNPACK_STRING_ARRAY(0, vecToUnpackTo);
+		FF_PACK_STRING_ARRAY(ret, vecToUnpackTo);
 		FF_RETURN(ret);
 	}
 
 	static NAN_METHOD(arg0IsArrayArray) {
 		FF_METHOD_CONTEXT("arg0IsArrayArray");
-		FF_ARG_UNPACK_ARRAY_ARRAY(0, vec);
-		FF_PACK_ARRAY_ARRAY(ret, vec);
+		FF_ARG_UNPACK_ARRAY_ARRAY(0, vecToUnpackTo);
+		FF_PACK_ARRAY_ARRAY(ret, vecToUnpackTo);
 		FF_RETURN(ret);
 	}
 
 	static NAN_METHOD(arg0IsObjectArray) {
 		FF_METHOD_CONTEXT("arg0IsObjectArray");
-		FF_ARG_UNPACK_OBJECT_ARRAY(0, vec);
-		FF_PACK_OBJ_ARRAY(ret, vec);
+		FF_ARG_UNPACK_OBJECT_ARRAY(0, vecToUnpackTo);
+		FF_PACK_OBJ_ARRAY(ret, vecToUnpackTo);
 		FF_RETURN(ret);
 	}
 
 	static NAN_METHOD(arg0IsOptBoolArray) {
 		FF_METHOD_CONTEXT("arg0IsOptBoolArray");
-		FF_ARG_UNPACK_BOOL_ARRAY_IFDEF(0, vec, std::vector<bool>());
-		FF_PACK_ARRAY(ret, vec);
+		std::vector<bool> defaultVec;
+		defaultVec.push_back(false);
+		FF_ARG_UNPACK_BOOL_ARRAY_IFDEF(0, vecToUnpackTo, defaultVec);
+		FF_PACK_ARRAY(ret, vecToUnpackTo);
 		FF_RETURN(ret);
 	}
 
 	static NAN_METHOD(arg0IsOptNumberArray) {
 		FF_METHOD_CONTEXT("arg0IsOptNumberArray");
-		FF_ARG_UNPACK_NUMBER_ARRAY_IFDEF(0, vec, std::vector<double>());
-		FF_PACK_ARRAY(ret, vec);
+		std::vector<double> defaultVec;
+		defaultVec.push_back(-0.1);
+		FF_ARG_UNPACK_NUMBER_ARRAY_IFDEF(0, vecToUnpackTo, defaultVec);
+		FF_PACK_ARRAY(ret, vecToUnpackTo);
 		FF_RETURN(ret);
 	}
 
 	static NAN_METHOD(arg0IsOptIntArray) {
 		FF_METHOD_CONTEXT("arg0IsOptIntArray");
-		FF_ARG_UNPACK_INT_ARRAY_IFDEF(0, vec, std::vector<int>());
-		FF_PACK_ARRAY(ret, vec);
+		std::vector<int> defaultVec;
+		defaultVec.push_back(-2);
+		FF_ARG_UNPACK_INT_ARRAY_IFDEF(0, vecToUnpackTo, defaultVec);
+		FF_PACK_ARRAY(ret, vecToUnpackTo);
 		FF_RETURN(ret);
 	}
 
 	static NAN_METHOD(arg0IsOptUintArray) {
 		FF_METHOD_CONTEXT("arg0IsOptUintArray");
-		FF_ARG_UNPACK_UINT_ARRAY_IFDEF(0, vec, std::vector<uint>());
-		FF_PACK_ARRAY(ret, vec);
+		std::vector<uint> defaultVec;
+		defaultVec.push_back(2);
+		FF_ARG_UNPACK_UINT_ARRAY_IFDEF(0, vecToUnpackTo, defaultVec);
+		FF_PACK_ARRAY(ret, vecToUnpackTo);
 		FF_RETURN(ret);
 	}
 
 	static NAN_METHOD(arg0IsOptStringArray) {
 		FF_METHOD_CONTEXT("arg0IsOptStringArray");
-		FF_ARG_UNPACK_STRING_ARRAY_IFDEF(0, vec, std::vector<std::string>());
-		FF_PACK_STRING_ARRAY(ret, vec);
+		std::vector<std::string> defaultVec;
+		defaultVec.push_back("foo");
+		FF_ARG_UNPACK_STRING_ARRAY_IFDEF(0, vecToUnpackTo, defaultVec);
+		FF_PACK_STRING_ARRAY(ret, vecToUnpackTo);
 		FF_RETURN(ret);
 	}
 
 	static NAN_METHOD(arg0IsOptArrayArray) {
 		FF_METHOD_CONTEXT("arg0IsOptArrayArray");
-		FF_ARG_UNPACK_ARRAY_ARRAY_IFDEF(0, vec, std::vector<FF_ARR>());
-		FF_PACK_ARRAY_ARRAY(ret, vec);
+		std::vector<FF_ARR> defaultVec;
+		defaultVec.push_back(FF_NEW_ARRAY(0));
+		FF_ARG_UNPACK_ARRAY_ARRAY_IFDEF(0, vecToUnpackTo, defaultVec;);
+		FF_PACK_ARRAY_ARRAY(ret, vecToUnpackTo);
 		FF_RETURN(ret);
 	}
 
 	static NAN_METHOD(arg0IsOptObjectArray) {
 		FF_METHOD_CONTEXT("arg0IsOptObjectArray");
-		FF_ARG_UNPACK_OBJECT_ARRAY_IFDEF(0, vec, std::vector<FF_OBJ>());
-		FF_PACK_OBJ_ARRAY(ret, vec);
+		std::vector<FF_OBJ> defaultVec;
+		defaultVec.push_back(FF_NEW_OBJ());
+		FF_ARG_UNPACK_OBJECT_ARRAY_IFDEF(0, vecToUnpackTo, defaultVec);
+		FF_PACK_OBJ_ARRAY(ret, vecToUnpackTo);
 		FF_RETURN(ret);
 	}
 

@@ -5,64 +5,77 @@
 
 /* js property getters */
 
-#define FF_GET(obj, prop) Nan::Get(obj, FF_NEW_STRING(prop)).ToLocalChecked()
+#define FF_GET(ff_obj, ff_prop) Nan::Get(ff_obj, FF_NEW_STRING(ff_prop)).ToLocalChecked()
 
-#define FF_REQUIRE_PROP(obj, prop)														\
-	if (!FF_HAS(obj, prop)) {																		\
-		FF_THROW("object has no property: " + std::string(prop)); \
+#define FF_REQUIRE_PROP(ff_obj, ff_prop)													\
+	if (!FF_HAS(ff_obj, ff_prop)) {																	\
+		FF_THROW("object has no property: " + std::string(ff_prop));	\
 	}
 
-#define FF_REQUIRE_PROP_TYPE(obj, prop, ff_type)																								\
-	if (!ff_type.checkType(FF_GET(obj, prop))) {																									\
-		FF_THROW("expected property: " + std::string(prop) + " to be of type: " + ff_type.typeName);\
+#define FF_REQUIRE_PROP_TYPE(ff_obj, ff_prop, ff_ffType)																							\
+	if (!ff_ffType.checkType(FF_GET(ff_obj, ff_prop))) {																								\
+		FF_THROW("expected property: " + std::string(ff_prop) + " to be of type: " + ff_ffType.typeName);	\
 	}
 
-#define FF_REQUIRE_PROP_INSTANCE(obj, prop, ctor, clazz)																								\
-	if (!FF_IS_INSTANCE(ctor, FF_GET(obj, prop))) {																												\
-    FF_THROW("expected property: " + std::string(prop) + " to be instance of: " + std::string(#clazz));	\
+#define FF_REQUIRE_PROP_INSTANCE(ff_obj, ff_prop, ctor, clazz)																							\
+	if (!FF_IS_INSTANCE(ctor, FF_GET(ff_obj, ff_prop))) {																											\
+    FF_THROW("expected property: " + std::string(ff_prop) + " to be instance of: " + std::string(#clazz));	\
   }
 
 /* get js prop, throw if undefined or invalid type */
-#define FF_GET_REQUIRED(obj, var, prop, ff_type)	\
-	FF_REQUIRE_PROP(obj, prop)											\
-	FF_REQUIRE_PROP_TYPE(obj, prop, ff_type)				\
-	var = ff_type.cast(FF_GET(obj, prop));
+#define FF_GET_REQUIRED(ff_obj, ff_var, ff_prop, ff_ffType)	\
+	FF_REQUIRE_PROP(ff_obj, ff_prop)													\
+	FF_REQUIRE_PROP_TYPE(ff_obj, ff_prop, ff_ffType)					\
+	ff_var = ff_ffType.cast(FF_GET(ff_obj, ff_prop));
 
-/* unpack object, throw if undefined or not instance */
-#define FF_GET_INSTANCE_REQUIRED(obj, var, prop, ctor, unwrapper, clazz)	\
-	FF_REQUIRE_PROP(obj, prop)																				\
-	FF_REQUIRE_PROP_INSTANCE(obj, prop, ctor, clazz)									\
-	var = unwrapper(obj);
+/* unpack ff_object, throw if undefined or not instance */
+#define FF_GET_INSTANCE_REQUIRED(ff_obj, ff_var, ff_prop, ctor, unwrapper, clazz)	\
+	FF_REQUIRE_PROP(ff_obj, ff_prop)																								\
+	FF_REQUIRE_PROP_INSTANCE(ff_obj, ff_prop, ctor, clazz)													\
+	ff_var = unwrapper(ff_obj);
 
 /* get js prop if defined, throw if invalid type */
-#define FF_GET_IFDEF(obj, var, prop, ff_type, defaultValue)										\
-	if (FF_HAS(obj, prop)) {																										\
-		FF_REQUIRE_PROP_TYPE(obj, prop, ff_type)																	\
-	}																																						\
-	var = (FF_HAS(obj, prop) ? ff_type.cast(FF_GET(obj, prop)) : defaultValue);
+#define FF_GET_IFDEF(ff_obj, ff_var, ff_prop, ff_ffType, defaultValue)	\
+	if (FF_HAS(ff_obj, ff_prop)) {																				\
+		FF_REQUIRE_PROP_TYPE(ff_obj, ff_prop, ff_ffType)										\
+	}																																			\
+	ff_var = (FF_HAS(ff_obj, ff_prop) ? ff_ffType.cast(FF_GET(ff_obj, ff_prop)) : defaultValue);
 
 /* unpack object if defined if not instance */
-#define FF_GET_INSTANCE_IFDEF(obj, var, prop, ctor, unwrapper, clazz, defaultValue)	\
-	if (FF_HAS(obj, prop)) {																													\
-		FF_REQUIRE_PROP_INSTANCE(obj, prop, ctor, clazz)																\
-	}																																									\
-	var = (FF_HAS(obj, prop) ? unwrapper(FF_GET(obj, prop)->ToObject()) : defaultValue);
+#define FF_GET_INSTANCE_IFDEF(ff_obj, ff_var, ff_prop, ctor, unwrapper, clazz, defaultValue)	\
+	if (FF_HAS(ff_obj, ff_prop)) {																															\
+		FF_REQUIRE_PROP_INSTANCE(ff_obj, ff_prop, ctor, clazz)																		\
+	}																																														\
+	ff_var = (FF_HAS(ff_obj, ff_prop) ? unwrapper(FF_GET(ff_obj, ff_prop)->ToObject()) : defaultValue);
 
 /* getters - native types */
-#define FF_GET_BOOL_REQUIRED(obj, var, prop) FF_GET_REQUIRED(obj, var, prop, ff_bool)
-#define FF_GET_NUMBER_REQUIRED(obj, var, prop) FF_GET_REQUIRED(obj, var, prop, ff_number)
-#define FF_GET_UINT_REQUIRED(obj, var, prop) FF_GET_REQUIRED(obj, var, prop, ff_uint)
-#define FF_GET_INT_REQUIRED(obj, var, prop) FF_GET_REQUIRED(obj, var, prop, ff_int)
-#define FF_GET_STRING_REQUIRED(obj, var, prop) FF_GET_REQUIRED(obj, var, prop, ff_string)
-#define FF_GET_ARRAY_REQUIRED(obj, var, prop) FF_GET_REQUIRED(obj, var, prop, ff_array_type)
-#define FF_GET_OBJ_REQUIRED(obj, var, prop) FF_GET_REQUIRED(obj, var, prop, ff_obj_type)
+#define FF_GET_BOOL_REQUIRED(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED(ff_obj, ff_var, ff_prop, ff_bool)
+#define FF_GET_NUMBER_REQUIRED(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED(ff_obj, ff_var, ff_prop, ff_number)
+#define FF_GET_UINT_REQUIRED(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED(ff_obj, ff_var, ff_prop, ff_uint)
+#define FF_GET_INT_REQUIRED(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED(ff_obj, ff_var, ff_prop, ff_int)
+#define FF_GET_STRING_REQUIRED(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED(ff_obj, ff_var, ff_prop, ff_string)
+#define FF_GET_ARRAY_REQUIRED(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED(ff_obj, ff_var, ff_prop, ff_array_type)
+#define FF_GET_OBJ_REQUIRED(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED(ff_obj, ff_var, ff_prop, ff_obj_type)
 
-#define FF_GET_BOOL_IFDEF(obj, var, prop, defaultValue) FF_GET_IFDEF(obj, var, prop, ff_bool, defaultValue)
-#define FF_GET_NUMBER_IFDEF(obj, var, prop, defaultValue) FF_GET_IFDEF(obj, var, prop, ff_number, defaultValue)
-#define FF_GET_UINT_IFDEF(obj, var, prop, defaultValue) FF_GET_IFDEF(obj, var, prop, ff_uint, defaultValue)
-#define FF_GET_INT_IFDEF(obj, var, prop, defaultValue) FF_GET_IFDEF(obj, var, prop, ff_int, defaultValue)
-#define FF_GET_STRING_IFDEF(obj, var, prop, defaultValue) FF_GET_IFDEF(obj, var, prop, ff_string, defaultValue)
-#define FF_GET_ARRAY_IFDEF(obj, var, prop, defaultValue) FF_GET_IFDEF(obj, var, prop, ff_array_type, defaultValue)
-#define FF_GET_OBJ_IFDEF(obj, var, prop, defaultValue) FF_GET_IFDEF(obj, var, prop, ff_obj_type, defaultValue)
+#define FF_GET_BOOL_IFDEF(ff_obj, ff_var, ff_prop, defaultValue) FF_GET_IFDEF(ff_obj, ff_var, ff_prop, ff_bool, defaultValue)
+#define FF_GET_NUMBER_IFDEF(ff_obj, ff_var, ff_prop, defaultValue) FF_GET_IFDEF(ff_obj, ff_var, ff_prop, ff_number, defaultValue)
+#define FF_GET_UINT_IFDEF(ff_obj, ff_var, ff_prop, defaultValue) FF_GET_IFDEF(ff_obj, ff_var, ff_prop, ff_uint, defaultValue)
+#define FF_GET_INT_IFDEF(ff_obj, ff_var, ff_prop, defaultValue) FF_GET_IFDEF(ff_obj, ff_var, ff_prop, ff_int, defaultValue)
+#define FF_GET_STRING_IFDEF(ff_obj, ff_var, ff_prop, defaultValue) FF_GET_IFDEF(ff_obj, ff_var, ff_prop, ff_string, defaultValue)
+#define FF_GET_ARRAY_IFDEF(ff_obj, ff_var, ff_prop, defaultValue) FF_GET_IFDEF(ff_obj, ff_var, ff_prop, ff_array_type, defaultValue)
+#define FF_GET_OBJ_IFDEF(ff_obj, ff_var, ff_prop, defaultValue) FF_GET_IFDEF(ff_obj, ff_var, ff_prop, ff_obj_type, defaultValue)
+
+/* get and unpack array */
+#define FF_GET_AND_UNPACK_ARRAY(ff_argN, ff_var, ff_type, ff_ffType)	\
+	std::vector<ff_type> vec;																						\
+	FF_GET_AND_UNPACK_ARRAY_TO(ff_obj, vec, ff_prop, ff_ffType)
+
+#define FF_GET_AND_UNPACK_ARRAY_TO(ff_obj, vec, ff_prop, ff_ffType)	\
+	do {																															\
+		FF_ARR ff_tmpArray;																							\
+		FF_GET_REQUIRED(ff_obj, ff_tmpArr, ff_prop, ff_array_type)			\
+		FF_UNPACK_ARRAY_TO(vec, ff_tmpArr, ff_ffType)										\
+	} while (0);
+
 
 #endif
