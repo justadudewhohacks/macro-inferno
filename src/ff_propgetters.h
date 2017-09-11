@@ -67,14 +67,14 @@
 
 /* get and unpack array */
 #define FF_GET_AND_UNPACK_ARRAY(ff_argN, ff_var, ff_type, ff_ffType)	\
-	std::vector<ff_type> vec;																						\
-	FF_GET_AND_UNPACK_ARRAY_TO(ff_obj, vec, ff_prop, ff_ffType)
+	std::vector<ff_type> ff_var;																				\
+	FF_GET_AND_UNPACK_ARRAY_TO(ff_obj, ff_var, ff_prop, ff_ffType)
 
-#define FF_GET_AND_UNPACK_ARRAY_TO(ff_obj, vec, ff_prop, ff_ffType)	\
-	do {																															\
-		FF_ARR ff_tmpArray;																							\
-		FF_GET_REQUIRED(ff_obj, ff_tmpArr, ff_prop, ff_array_type)			\
-		FF_UNPACK_ARRAY_TO(vec, ff_tmpArr, ff_ffType)										\
+#define FF_GET_AND_UNPACK_ARRAY_TO(ff_obj, ff_var, ff_prop, ff_ffType)	\
+	do {																																	\
+		FF_ARR ff_tmpArray;																									\
+		FF_GET_REQUIRED(ff_obj, ff_tmpArr, ff_prop, ff_array_type)					\
+		FF_UNPACK_ARRAY_TO(ff_var, ff_tmpArr, ff_ffType)										\
 	} while (0);
 
 
