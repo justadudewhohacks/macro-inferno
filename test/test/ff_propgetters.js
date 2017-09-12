@@ -2,6 +2,7 @@ const { expect } = require('chai');
 const dut = require('../dut');
 const {
   assertErrorMsg,
+  getTypeErrMsg,
   getPropRequiredErrMsg,
   getPropTypeErrMsg,
   values
@@ -11,6 +12,94 @@ const {
   aBool, aNumber, anInt, anUint, aString, anArray, anObject,
   aBoolDefault, aNumberDefault, anIntDefault, anUintDefault, aStringDefault
 } = values;
+
+const generateArrayPropTests = ({ type, throwForTypes, validValues }) => {
+  describe(`${type} array`, () => {
+    const method = `getUnpackAndReturn${`${type[0].toUpperCase()}${type.substr(1)}`}Array`;
+    const propName = `${type}Array`;
+    it('should throw prop required', () => {
+      assertErrorMsg(() => dut[method]({}), getPropRequiredErrMsg(method, propName));
+    });
+
+    it('should throw type error, expected array', () => {
+      assertErrorMsg(() => dut[method]({ [propName]: undefined }), getPropTypeErrMsg(method, propName, 'ARRAY'));
+    });
+
+    it('should NOT throw if array is empty', () => {
+      expect(() => dut[method]({ [propName]: [] })).not.to.throw();
+    });
+
+    it('should NOT throw if array of valid types', () => {
+      validValues.forEach((val) => {
+        expect(() => dut[method]({ [propName]: [val] })).not.to.throw();
+      });
+    });
+
+    it('should throw type error if array contains invalid values', () => {
+      throwForTypes.forEach((val) => {
+        assertErrorMsg(
+          () => dut[method]({ [propName]: [validValues[0], val] }),
+          getTypeErrMsg(type.toUpperCase())
+        );
+      });
+    });
+
+    it('should return prop value', () => {
+      const ret = dut[method]({ [propName]: [validValues[0]] });
+      expect(ret).to.be.an('array');
+      expect(ret).to.have.members([validValues[0]]);
+    });
+  });
+};
+
+const generateOptArrayPropTests = ({ type, throwForTypes, validValues, defaultVal, assertDefaultVal }) => {
+  describe(`${type} array`, () => {
+    const method = `getUnpackAndReturnOpt${`${type[0].toUpperCase()}${type.substr(1)}`}Array`;
+    const propName = `${type}Array`;
+    it('should NOT throw if not has property', () => {
+      expect(() => dut[method]({})).not.to.throw();
+    });
+
+    it('should throw type error, expected array if has prop', () => {
+      assertErrorMsg(() => dut[method]({ [propName]: undefined }), getPropTypeErrMsg(method, propName, 'ARRAY'));
+    });
+
+    it('should NOT throw if array is empty', () => {
+      expect(() => dut[method]({ [propName]: [] })).not.to.throw();
+    });
+
+    it('should NOT throw if array of valid types', () => {
+      validValues.forEach((val) => {
+        expect(() => dut[method]({ [propName]: [val] })).not.to.throw();
+      });
+    });
+
+    it('should throw type error if array contains invalid values', () => {
+      throwForTypes.forEach((val) => {
+        assertErrorMsg(
+          () => dut[method]({ [propName]: [validValues[0], val] }),
+          getTypeErrMsg(type.toUpperCase())
+        );
+      });
+    });
+
+    it('should return prop value if has property', () => {
+      const ret = dut[method]({ [propName]: [validValues[0]] });
+      expect(ret).to.be.an('array');
+      expect(ret).to.have.members([validValues[0]]);
+    });
+
+    it('should return default value if not has property', () => {
+      let assertType = (type === 'int' || type === 'uint') ? 'number' : type;
+      assertType = assertType === 'bool' ? 'boolean' : assertType;
+      const returnedDefaultVal = dut[method]({});
+      expect(returnedDefaultVal).to.be.an('array').lengthOf(1);
+      returnedDefaultVal.forEach((val) => {
+        expect(val).to.be.a(assertType);
+      });
+    });
+  });
+};
 
 describe('ff_propgetters', () => {
   describe('required props', () => {
@@ -283,6 +372,101 @@ describe('ff_propgetters', () => {
         const defaultObj = dut[method]({});
         expect(defaultObj).to.have.property('default').to.equal(true);
       });
+    });
+  });
+
+  describe('array props', () => {
+    generateArrayPropTests({
+      type: 'bool',
+      throwForTypes: [aNumber, anInt, anUint, aString, anObject, anArray],
+      validValues: [aBool]
+    });
+
+    generateArrayPropTests({
+      type: 'number',
+      throwForTypes: [aBool, aString, anObject, anArray],
+      validValues: [aNumber, anInt, anUint]
+    });
+
+    generateArrayPropTests({
+      type: 'int',
+      throwForTypes: [aBool, aNumber, aString, anObject, anArray],
+      validValues: [anInt, anUint]
+    });
+
+    generateArrayPropTests({
+      type: 'uint',
+      throwForTypes: [aBool, aNumber, anInt, aString, anObject, anArray],
+      validValues: [anUint]
+    });
+
+    generateArrayPropTests({
+      type: 'string',
+      throwForTypes: [aBool, aNumber, anInt, anUint, anObject, anArray],
+      validValues: [aString]
+    });
+
+    generateArrayPropTests({
+      type: 'array',
+      throwForTypes: [aBool, aNumber, anInt, anUint, aString, anObject],
+      validValues: [anArray]
+    });
+
+    generateArrayPropTests({
+      type: 'object',
+      throwForTypes: [aBool, aNumber, anInt, anUint, aString, anArray],
+      validValues: [anObject]
+    });
+  });
+
+  describe('optional array props', () => {
+    generateOptArrayPropTests({
+      type: 'bool',
+      throwForTypes: [aNumber, anInt, anUint, aString, anObject, anArray],
+      validValues: [aBool],
+      defaultVal: aBoolDefault
+    });
+
+    generateOptArrayPropTests({
+      type: 'number',
+      throwForTypes: [aBool, aString, anObject, anArray],
+      validValues: [aNumber, anInt, anUint],
+      defaultVal: aNumberDefault
+    });
+
+    generateOptArrayPropTests({
+      type: 'int',
+      throwForTypes: [aBool, aNumber, aString, anObject, anArray],
+      validValues: [anInt, anUint],
+      defaultVal: anIntDefault
+    });
+
+    generateOptArrayPropTests({
+      type: 'uint',
+      throwForTypes: [aBool, aNumber, anInt, aString, anObject, anArray],
+      validValues: [anUint],
+      defaultVal: anUintDefault
+    });
+
+    generateOptArrayPropTests({
+      type: 'string',
+      throwForTypes: [aBool, aNumber, anInt, anUint, anObject, anArray],
+      validValues: [aString],
+      defaultVal: aStringDefault
+    });
+
+    generateOptArrayPropTests({
+      type: 'array',
+      throwForTypes: [aBool, aNumber, anInt, anUint, aString, anObject],
+      validValues: [anArray],
+      defaultVal: []
+    });
+
+    generateOptArrayPropTests({
+      type: 'object',
+      throwForTypes: [aBool, aNumber, anInt, anUint, aString, anArray],
+      validValues: [anObject],
+      defaultVal: {}
     });
   });
 });
