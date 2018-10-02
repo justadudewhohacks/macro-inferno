@@ -35,7 +35,7 @@ static FF_OBJECT_TYPE ff_obj_type = FF_OBJECT_TYPE();
 	FF_UNPACK_ARRAY_TO(ff_var, ff_arr, ffType);
 
 #define FF_UNPACK_ARRAY_TO(ff_vec, ff_arr, ffType)																																						\
-	for (int i = 0; i < ff_arr->Length(); i++) {																																								\
+	for (uint i = 0; i < ff_arr->Length(); i++) {																																								\
 		FF_VAL ff_val = ff_arr->Get(i);																																														\
 		if (!ffType.checkType(ff_val)) {																																													\
 			FF_THROW("expected array element to be of type: " + std::string(ffType.typeName) + ", at index: " + std::to_string(i));	\
@@ -45,7 +45,7 @@ static FF_OBJECT_TYPE ff_obj_type = FF_OBJECT_TYPE();
 
 #define FF_PACK_ARRAY_(ff_var, ff_vec, create)	\
 	FF_ARR ff_var = FF_NEW_ARRAY(ff_vec.size());	\
-	for (int i = 0; i < ff_vec.size(); i++) {			\
+	for (unsigned long i = 0; i < ff_vec.size(); i++) {			\
 		ff_var->Set(i, create(ff_vec.at(i)));				\
 	}
 
