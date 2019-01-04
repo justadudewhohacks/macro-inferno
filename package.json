@@ -20,6 +20,6 @@
     "url": "git+https://github.com/justadudewhohacks/macro-inferno"
   },
   "dependencies": {
-    "nan": "^2.7.0"
+    "nan": "^2.12.1"
   }
 }
