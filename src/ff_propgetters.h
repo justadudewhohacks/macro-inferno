@@ -46,7 +46,7 @@
 	if (FF_HAS(ff_obj, ff_prop)) {																															\
 		FF_REQUIRE_PROP_INSTANCE(ff_obj, ff_prop, ctor, clazz)																		\
 	}																																														\
-	ff_var = (FF_HAS(ff_obj, ff_prop) ? unwrapper(FF_GET(ff_obj, ff_prop)->ToObject()) : defaultValue);
+	ff_var = (FF_HAS(ff_obj, ff_prop) ? unwrapper(FF_GET(ff_obj, ff_prop)->ToObject(Nan::GetCurrentContext()).ToLocalChecked()) : defaultValue);
 
 /* getters - native types */
 #define FF_GET_BOOL_REQUIRED(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED(ff_obj, ff_var, ff_prop, ff_bool)
