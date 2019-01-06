@@ -24,10 +24,10 @@
   if (!FF_HAS_ARG(ff_argN) || !FF_IS_INSTANCE(ctor, info[ff_argN])) {																			\
     FF_THROW("expected arg " + std::to_string(ff_argN) + " to be instance of: " + std::string(#ctor));	\
   }																																																	\
-  ff_var = unwrapper(info[ff_argN]->ToObject());
+  ff_var = unwrapper(info[ff_argN]->ToObject(Nan::GetCurrentContext()).ToLocalChecked());
 
 #define FF_ARG_INSTANCE_IFDEF(ff_argN, ff_var, ctor, unwrapper, ff_defaultValue)	\
-  ff_var = (!FF_HAS_ARG(ff_argN) || !FF_IS_INSTANCE(ctor, info[ff_argN]) ? ff_defaultValue : unwrapper(info[ff_argN]->ToObject()));
+  ff_var = (!FF_HAS_ARG(ff_argN) || !FF_IS_INSTANCE(ctor, info[ff_argN]) ? ff_defaultValue : unwrapper(info[ff_argN]->ToObject(Nan::GetCurrentContext()).ToLocalChecked()));
 
 /* aliases */
 #define FF_ARG_BOOL(ff_argN, ff_var) FF_ARG(ff_argN, ff_var, ff_bool)
