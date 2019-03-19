@@ -53,7 +53,7 @@
 #define FF_ARG_STRING_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_string, ff_defaultValue)
 #define FF_ARG_ARRAY_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_array_type, ff_defaultValue)
 #define FF_ARG_OBJ_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_obj_type, ff_defaultValue)
-#define FF_ARG_FUNC_IFDEG(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_func_type, ff_defaultValue)
+#define FF_ARG_FUNC_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_func_type, ff_defaultValue)
 
 /* unpack array args */
 #define FF_ARG_UNPACK_ARRAY_TO(ff_argN, vec, ffType)	\
