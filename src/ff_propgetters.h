@@ -91,7 +91,7 @@
 
 #define FF_GET_UNPACK_BOOL_ARRAY(ff_obj, ff_var, ff_prop) FF_GET_UNPACK_ARRAY(ff_obj, ff_var, ff_prop, bool, ff_bool)
 #define FF_GET_UNPACK_NUMBER_ARRAY(ff_obj, ff_var, ff_prop) FF_GET_UNPACK_ARRAY(ff_obj, ff_var, ff_prop, double, ff_number)
-#define FF_GET_UNPACK_UINT_ARRAY(ff_obj, ff_var, ff_prop) FF_GET_UNPACK_ARRAY(ff_obj, ff_var, ff_prop, uint, ff_uint)
+#define FF_GET_UNPACK_UINT_ARRAY(ff_obj, ff_var, ff_prop) FF_GET_UNPACK_ARRAY(ff_obj, ff_var, ff_prop, unsigned int, ff_uint)
 #define FF_GET_UNPACK_INT_ARRAY(ff_obj, ff_var, ff_prop) FF_GET_UNPACK_ARRAY(ff_obj, ff_var, ff_prop, int, ff_int)
 #define FF_GET_UNPACK_STRING_ARRAY(ff_obj, ff_var, ff_prop) FF_GET_UNPACK_ARRAY(ff_obj, ff_var, ff_prop, std::string, ff_string)
 #define FF_GET_UNPACK_ARRAY_ARRAY(ff_obj, ff_var, ff_prop) FF_GET_UNPACK_ARRAY(ff_obj, ff_var, ff_prop, FF_ARR, ff_array_type)
@@ -107,7 +107,7 @@
 
 #define FF_GET_UNPACK_BOOL_ARRAY_IFDEF(ff_obj, ff_var, ff_prop, ff_defaultValue) FF_GET_UNPACK_ARRAY_IFDEF(ff_obj, ff_var, ff_prop, bool, ff_bool, ff_defaultValue)
 #define FF_GET_UNPACK_NUMBER_ARRAY_IFDEF(ff_obj, ff_var, ff_prop, ff_defaultValue) FF_GET_UNPACK_ARRAY_IFDEF(ff_obj, ff_var, ff_prop, double, ff_number, ff_defaultValue)
-#define FF_GET_UNPACK_UINT_ARRAY_IFDEF(ff_obj, ff_var, ff_prop, ff_defaultValue) FF_GET_UNPACK_ARRAY_IFDEF(ff_obj, ff_var, ff_prop, uint, ff_uint, ff_defaultValue)
+#define FF_GET_UNPACK_UINT_ARRAY_IFDEF(ff_obj, ff_var, ff_prop, ff_defaultValue) FF_GET_UNPACK_ARRAY_IFDEF(ff_obj, ff_var, ff_prop, unsigned int, ff_uint, ff_defaultValue)
 #define FF_GET_UNPACK_INT_ARRAY_IFDEF(ff_obj, ff_var, ff_prop, ff_defaultValue) FF_GET_UNPACK_ARRAY_IFDEF(ff_obj, ff_var, ff_prop, int, ff_int, ff_defaultValue)
 #define FF_GET_UNPACK_STRING_ARRAY_IFDEF(ff_obj, ff_var, ff_prop, ff_defaultValue) FF_GET_UNPACK_ARRAY_IFDEF(ff_obj, ff_var, ff_prop, std::string, ff_string, ff_defaultValue)
 #define FF_GET_UNPACK_ARRAY_ARRAY_IFDEF(ff_obj, ff_var, ff_prop, ff_defaultValue) FF_GET_UNPACK_ARRAY_IFDEF(ff_obj, ff_var, ff_prop, FF_ARR, ff_array_type, ff_defaultValue)

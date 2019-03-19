@@ -3,8 +3,6 @@
 #ifndef __FF_FF_H__
 #define __FF_FF_H__
 
-typedef unsigned int uint;
-
 #define FF_VAL v8::Local<v8::Value>
 #define FF_OBJ v8::Local<v8::Object>
 #define FF_ARR v8::Local<v8::Array>

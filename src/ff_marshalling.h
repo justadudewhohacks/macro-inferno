@@ -17,7 +17,7 @@
 struct FF_TYPE(BOOL, bool, FF_IS_BOOL, FF_CAST_BOOL);
 struct FF_TYPE(NUMBER, double, FF_IS_NUMBER, FF_CAST_NUMBER);
 struct FF_TYPE(FLOAT, float, FF_IS_NUMBER, FF_CAST_FLOAT);
-struct FF_TYPE(UINT, uint, FF_IS_UINT, FF_CAST_UINT);
+struct FF_TYPE(UINT, unsigned int, FF_IS_UINT, FF_CAST_UINT);
 struct FF_TYPE(INT, int, FF_IS_INT, FF_CAST_INT);
 struct FF_TYPE(STRING, std::string, FF_IS_STRING, FF_CAST_STRING);
 struct FF_TYPE(ARRAY, FF_ARR, FF_IS_ARRAY, FF_CAST_ARRAY);
@@ -37,7 +37,7 @@ static FF_OBJECT_TYPE ff_obj_type = FF_OBJECT_TYPE();
 	FF_UNPACK_ARRAY_TO(ff_var, ff_arr, ffType);
 
 #define FF_UNPACK_ARRAY_TO(ff_vec, ff_arr, ffType)																																						\
-	for (uint i = 0; i < ff_arr->Length(); i++) {																																								\
+	for (unsigned int i = 0; i < ff_arr->Length(); i++) {																																								\
 		FF_VAL ff_val = ff_arr->Get(i);																																														\
 		if (!ffType.checkType(ff_val)) {																																													\
 			FF_THROWTYPE("expected array element to be of type: " + std::string(ffType.typeName) + ", at index: " + std::to_string(i));	\
@@ -51,7 +51,7 @@ static FF_OBJECT_TYPE ff_obj_type = FF_OBJECT_TYPE();
 		ff_var->Set(i, create(ff_vec.at(i)));				\
 	}
 
-#define FF_UNPACK_UINT_ARRAY(ff_var, ff_arr) FF_UNPACK_ARRAY(ff_var, ff_arr, uint, ff_uint)
+#define FF_UNPACK_UINT_ARRAY(ff_var, ff_arr) FF_UNPACK_ARRAY(ff_var, ff_arr, unsigned int, ff_uint)
 #define FF_UNPACK_INT_ARRAY(ff_var, ff_arr) FF_UNPACK_ARRAY(ff_var, ff_arr, int, ff_int)
 #define FF_UNPACK_BOOL_ARRAY(ff_var, ff_arr) FF_UNPACK_ARRAY(ff_var, ff_arr, bool, ff_bool)
 #define FF_UNPACK_NUMBER_ARRAY(ff_var, ff_arr) FF_UNPACK_ARRAY(ff_var, ff_arr, double, ff_number)
