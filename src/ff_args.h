@@ -37,6 +37,7 @@
 /* aliases */
 #define FF_ARG_BOOL(ff_argN, ff_var) FF_ARG(ff_argN, ff_var, ff_bool)
 #define FF_ARG_NUMBER(ff_argN, ff_var) FF_ARG(ff_argN, ff_var, ff_number)
+#define FF_ARG_FLOAT(ff_argN, ff_var) FF_ARG(ff_argN, ff_var, ff_float)
 #define FF_ARG_UINT(ff_argN, ff_var) FF_ARG(ff_argN, ff_var, ff_uint)
 #define FF_ARG_INT(ff_argN, ff_var) FF_ARG(ff_argN, ff_var, ff_int)
 #define FF_ARG_STRING(ff_argN, ff_var) FF_ARG(ff_argN, ff_var, ff_string)
@@ -45,6 +46,7 @@
 
 #define FF_ARG_BOOL_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_bool, ff_defaultValue)
 #define FF_ARG_NUMBER_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_number, ff_defaultValue)
+#define FF_ARG_FLOAT_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_float, ff_defaultValue)
 #define FF_ARG_UINT_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_uint, ff_defaultValue)
 #define FF_ARG_INT_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_int, ff_defaultValue)
 #define FF_ARG_STRING_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_string, ff_defaultValue)
