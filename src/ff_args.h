@@ -7,6 +7,11 @@
 
 #define FF_HAS_ARG(ff_argN) ( ff_argN < info.Length() )
 
+#define FF_REQUIRE_INFO_LENGTH(ff_argN)                                                                           \
+  if(ff_argN != info.Length()) {                                                                                  \
+    FF_THROW("expected info length to be " + std::to_string(ff_argN) + ", but is " + std::to_string(info.Length()) ); \
+  }
+
 #define FF_REQUIRE_ARG_TYPE(ff_argN, ff_type, orThrow)																						\
   if (orThrow || !ff_type.checkType(info[ff_argN])) {																						\
     FF_THROW("expected arg " + std::to_string(ff_argN) + " to be of type: " + ff_type.typeName);	\
