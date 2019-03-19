@@ -79,6 +79,7 @@
 
 #define FF_ARG_UNPACK_BOOL_ARRAY(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY(ff_argN, ff_var, bool, ff_bool)
 #define FF_ARG_UNPACK_NUMBER_ARRAY(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY(ff_argN, ff_var, double, ff_number)
+#define FF_ARG_UNPACK_FLOAT_ARRAY(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY(ff_argN, ff_var, float, ff_float)
 #define FF_ARG_UNPACK_UINT_ARRAY(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY(ff_argN, ff_var, uint, ff_uint)
 #define FF_ARG_UNPACK_INT_ARRAY(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY(ff_argN, ff_var, int, ff_int)
 #define FF_ARG_UNPACK_STRING_ARRAY(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY(ff_argN, ff_var, std::string, ff_string)
@@ -87,6 +88,7 @@
 
 #define FF_ARG_UNPACK_BOOL_ARRAY_TO(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY_TO(ff_argN, ff_var, ff_bool)
 #define FF_ARG_UNPACK_NUMBER_ARRAY_TO(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY_TO(ff_argN, ff_var, ff_number)
+#define FF_ARG_UNPACK_FLOAT_ARRAY_TO(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY_TO(ff_argN, ff_var, ff_float)
 #define FF_ARG_UNPACK_UINT_ARRAY_TO(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY_TO(ff_argN, ff_var, ff_uint)
 #define FF_ARG_UNPACK_INT_ARRAY_TO(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY_TO(ff_argN, ff_var, ff_int)
 #define FF_ARG_UNPACK_STRING_ARRAY_TO(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY_TO(ff_argN, ff_var, ff_string)
@@ -95,6 +97,7 @@
 
 #define FF_ARG_UNPACK_BOOL_ARRAY_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(ff_argN, ff_var, bool, ff_bool, ff_defaultValue)
 #define FF_ARG_UNPACK_NUMBER_ARRAY_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(ff_argN, ff_var, double, ff_number, ff_defaultValue)
+#define FF_ARG_UNPACK_FLOAT_ARRAY_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(ff_argN, ff_var, float, ff_float, ff_defaultValue)
 #define FF_ARG_UNPACK_UINT_ARRAY_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(ff_argN, ff_var, uint, ff_uint, ff_defaultValue)
 #define FF_ARG_UNPACK_INT_ARRAY_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(ff_argN, ff_var, int, ff_int, ff_defaultValue)
 #define FF_ARG_UNPACK_STRING_ARRAY_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(ff_argN, ff_var, std::string, ff_string, ff_defaultValue)
@@ -103,6 +106,7 @@
 
 #define FF_ARG_UNPACK_BOOL_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_bool, ff_defaultValue)
 #define FF_ARG_UNPACK_NUMBER_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_number, ff_defaultValue)
+#define FF_ARG_UNPACK_FLOAT_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_float, ff_defaultValue)
 #define FF_ARG_UNPACK_UINT_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_uint, ff_defaultValue)
 #define FF_ARG_UNPACK_INT_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_int, ff_defaultValue)
 #define FF_ARG_UNPACK_STRING_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_string, ff_defaultValue)
