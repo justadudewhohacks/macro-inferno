@@ -14,7 +14,7 @@
 
 #define FF_REQUIRE_ARG_TYPE(ff_argN, ff_type, orThrow)																						\
   if (orThrow || !ff_type.checkType(info[ff_argN])) {																						\
-    FF_THROW("expected arg " + std::to_string(ff_argN) + " to be of type: " + ff_type.typeName);	\
+    FF_THROWTYPE("expected arg " + std::to_string(ff_argN) + " to be of type: " + ff_type.typeName);	\
   }
 
 #define FF_ARG(ff_argN, ff_var, ff_type)											\
@@ -27,7 +27,7 @@
 
 #define FF_ARG_INSTANCE(ff_argN, ff_var, ctor, unwrapper)																									\
   if (!FF_HAS_ARG(ff_argN) || !FF_IS_INSTANCE(ctor, info[ff_argN])) {																			\
-    FF_THROW("expected arg " + std::to_string(ff_argN) + " to be instance of: " + std::string(#ctor));	\
+    FF_THROWTYPE("expected arg " + std::to_string(ff_argN) + " to be instance of: " + std::string(#ctor));	\
   }																																																	\
   ff_var = unwrapper(info[ff_argN]->ToObject(Nan::GetCurrentContext()).ToLocalChecked());
 

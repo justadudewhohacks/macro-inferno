@@ -14,12 +14,12 @@
 
 #define FF_REQUIRE_PROP_TYPE(ff_obj, ff_prop, ff_ffType)																							\
 	if (!ff_ffType.checkType(FF_GET(ff_obj, ff_prop))) {																								\
-		FF_THROW("expected property: " + std::string(ff_prop) + " to be of type: " + ff_ffType.typeName);	\
+		FF_THROWTYPE("expected property: " + std::string(ff_prop) + " to be of type: " + ff_ffType.typeName);	\
 	}
 
 #define FF_REQUIRE_PROP_INSTANCE(ff_obj, ff_prop, ctor, clazz)																							\
 	if (!FF_IS_INSTANCE(ctor, FF_GET(ff_obj, ff_prop))) {																											\
-    FF_THROW("expected property: " + std::string(ff_prop) + " to be instance of: " + std::string(#clazz));	\
+    FF_THROWTYPE("expected property: " + std::string(ff_prop) + " to be instance of: " + std::string(#clazz));	\
   }
 
 /* get js prop, throw if undefined or invalid type */

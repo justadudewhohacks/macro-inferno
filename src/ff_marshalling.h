@@ -38,7 +38,7 @@ static FF_OBJECT_TYPE ff_obj_type = FF_OBJECT_TYPE();
 	for (uint i = 0; i < ff_arr->Length(); i++) {																																								\
 		FF_VAL ff_val = ff_arr->Get(i);																																														\
 		if (!ffType.checkType(ff_val)) {																																													\
-			FF_THROW("expected array element to be of type: " + std::string(ffType.typeName) + ", at index: " + std::to_string(i));	\
+			FF_THROWTYPE("expected array element to be of type: " + std::string(ffType.typeName) + ", at index: " + std::to_string(i));	\
 		}																																																													\
 		ff_vec.push_back(ffType.cast(ff_val));																																										\
 	}
