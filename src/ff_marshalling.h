@@ -39,7 +39,8 @@ static FF_FUNCTION_TYPE ff_func_type = FF_FUNCTION_TYPE();
 	FF_UNPACK_ARRAY_TO(ff_var, ff_arr, ffType);
 
 #define FF_UNPACK_ARRAY_TO(ff_vec, ff_arr, ffType)																																						\
-	for (unsigned int i = 0; i < ff_arr->Length(); i++) {																																								\
+	ff_vec.reserve(ff_vec.size() + ff_arr->Length());                                                                           \
+	for (unsigned int i = 0; i < ff_arr->Length(); i++) {																																				\
 		FF_VAL ff_val = ff_arr->Get(i);																																														\
 		if (!ffType.checkType(ff_val)) {																																													\
 			FF_THROWTYPE("expected array element to be of type: " + std::string(ffType.typeName) + ", at index: " + std::to_string(i));	\
