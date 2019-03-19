@@ -16,6 +16,7 @@
 
 struct FF_TYPE(BOOL, bool, FF_IS_BOOL, FF_CAST_BOOL);
 struct FF_TYPE(NUMBER, double, FF_IS_NUMBER, FF_CAST_NUMBER);
+struct FF_TYPE(FLOAT, float, FF_IS_NUMBER, FF_CAST_FLOAT);
 struct FF_TYPE(UINT, uint, FF_IS_UINT, FF_CAST_UINT);
 struct FF_TYPE(INT, int, FF_IS_INT, FF_CAST_INT);
 struct FF_TYPE(STRING, std::string, FF_IS_STRING, FF_CAST_STRING);
@@ -24,6 +25,7 @@ struct FF_TYPE(OBJECT, FF_OBJ, FF_IS_OBJ, FF_CAST_OBJ);
 
 static FF_BOOL_TYPE ff_bool = FF_BOOL_TYPE();
 static FF_NUMBER_TYPE ff_number = FF_NUMBER_TYPE();
+static FF_FLOAT_TYPE ff_float = FF_FLOAT_TYPE();
 static FF_UINT_TYPE ff_uint = FF_UINT_TYPE();
 static FF_INT_TYPE ff_int = FF_INT_TYPE();
 static FF_STRING_TYPE ff_string = FF_STRING_TYPE();

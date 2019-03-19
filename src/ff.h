@@ -15,6 +15,7 @@ typedef unsigned int uint;
 
 #define FF_CAST_BOOL(val) val->ToBoolean(Nan::GetCurrentContext()).ToLocalChecked()->Value()
 #define FF_CAST_NUMBER(val) val->ToNumber(Nan::GetCurrentContext()).ToLocalChecked()->Value()
+#define FF_CAST_FLOAT(val) static_cast<float>(val->ToNumber(Nan::GetCurrentContext()).ToLocalChecked()->Value())
 #define FF_CAST_UINT(val) val->ToUint32(Nan::GetCurrentContext()).ToLocalChecked()->Value()
 #define FF_CAST_INT(val) val->ToInt32(Nan::GetCurrentContext()).ToLocalChecked()->Value()
 #define FF_CAST_STRING(s) std::string(*Nan::Utf8String(s->ToString(Nan::GetCurrentContext()).ToLocalChecked()))
