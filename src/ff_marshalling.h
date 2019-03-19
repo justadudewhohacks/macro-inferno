@@ -22,6 +22,7 @@ struct FF_TYPE(INT, int, FF_IS_INT, FF_CAST_INT);
 struct FF_TYPE(STRING, std::string, FF_IS_STRING, FF_CAST_STRING);
 struct FF_TYPE(ARRAY, FF_ARR, FF_IS_ARRAY, FF_CAST_ARRAY);
 struct FF_TYPE(OBJECT, FF_OBJ, FF_IS_OBJ, FF_CAST_OBJ);
+struct FF_TYPE(FUNCTION, FF_FUNC, FF_IS_FUNC, FF_CAST_FUNC);
 
 static FF_BOOL_TYPE ff_bool = FF_BOOL_TYPE();
 static FF_NUMBER_TYPE ff_number = FF_NUMBER_TYPE();
@@ -31,6 +32,7 @@ static FF_INT_TYPE ff_int = FF_INT_TYPE();
 static FF_STRING_TYPE ff_string = FF_STRING_TYPE();
 static FF_ARRAY_TYPE ff_array_type = FF_ARRAY_TYPE();
 static FF_OBJECT_TYPE ff_obj_type = FF_OBJECT_TYPE();
+static FF_FUNCTION_TYPE ff_func_type = FF_FUNCTION_TYPE();
 
 #define FF_UNPACK_ARRAY(ff_var, ff_arr, ff_type, ffType)	\
 	std::vector<ff_type> ff_var;														\
@@ -55,6 +57,7 @@ static FF_OBJECT_TYPE ff_obj_type = FF_OBJECT_TYPE();
 #define FF_UNPACK_INT_ARRAY(ff_var, ff_arr) FF_UNPACK_ARRAY(ff_var, ff_arr, int, ff_int)
 #define FF_UNPACK_BOOL_ARRAY(ff_var, ff_arr) FF_UNPACK_ARRAY(ff_var, ff_arr, bool, ff_bool)
 #define FF_UNPACK_NUMBER_ARRAY(ff_var, ff_arr) FF_UNPACK_ARRAY(ff_var, ff_arr, double, ff_number)
+#define FF_UNPACK_FLOAT_ARRAY(ff_var, ff_arr) FF_UNPACK_ARRAY(ff_var, ff_arr, float, ff_float)
 #define FF_UNPACK_STRING_ARRAY(ff_var, ff_arr) FF_UNPACK_ARRAY(ff_var, ff_arr, std::string, ff_string)
 
 #define FF_UNPACK_UINT_ARRAY_TO(ff_vec, ff_arr) FF_UNPACK_ARRAY_TO(ff_vec, ff_arr, ff_uint)
