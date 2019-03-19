@@ -64,6 +64,7 @@ static FF_FUNCTION_TYPE ff_func_type = FF_FUNCTION_TYPE();
 #define FF_UNPACK_INT_ARRAY_TO(ff_vec, ff_arr) FF_UNPACK_ARRAY_TO(ff_vec, ff_arr, ff_int)
 #define FF_UNPACK_BOOL_ARRAY_TO(ff_vec, ff_arr) FF_UNPACK_ARRAY_TO(ff_vec, ff_arr, ff_bool)
 #define FF_UNPACK_NUMBER_ARRAY_TO(ff_vec, ff_arr) FF_UNPACK_ARRAY_TO(ff_vec, ff_arr, ff_number)
+#define FF_UNPACK_FLOAT_ARRAY_TO(ff_vec, ff_arr) FF_UNPACK_ARRAY_TO(ff_vec, ff_arr, ff_float)
 #define FF_UNPACK_STRING_ARRAY_TO(ff_vec, ff_arr) FF_UNPACK_ARRAY_TO(ff_vec, ff_arr, ff_string)
 
 #define FF_IDENTITY_FUNC(arg) arg
