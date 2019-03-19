@@ -34,6 +34,7 @@ typedef unsigned int uint;
 
 #define FF_RETURN(val) info.GetReturnValue().Set(val)
 #define FF_THROW(msg) return Nan::ThrowError(FF_NEW_STRING(std::string(ff_methodName) + " - " + std::string(msg)));
+#define FF_THROWTYPE(msg) return Nan::ThrowTypeError(FF_NEW_STRING(std::string(ff_methodName) + " - " + std::string(msg)));
 
 #define FF_METHOD_CONTEXT(methodName) std::string ff_methodName = methodName;
 
