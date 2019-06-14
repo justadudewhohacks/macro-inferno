@@ -37,7 +37,9 @@
 #define FF_RETURN(val) info.GetReturnValue().Set(val)
 #define FF_THROW(msg) return Nan::ThrowError(FF_NEW_STRING(std::string(ff_methodName) + " - " + std::string(msg)));
 #define FF_THROWTYPE(msg) return Nan::ThrowTypeError(FF_NEW_STRING(std::string(ff_methodName) + " - " + std::string(msg)));
+#define FF_THROWCPP(msg) throw std::runtime_error(std::string(ff_methodName) + " - " + std::string(msg));
 
 #define FF_METHOD_CONTEXT(methodName) std::string ff_methodName = methodName;
+#define FF_EXTEND_METHOD_CONTEXT(extension) ff_methodName.append(std::string(extension))
 
 #endif
