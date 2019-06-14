@@ -12,9 +12,20 @@
 		FF_THROW("object has no property: " + std::string(ff_prop));	\
 	}
 
+//Just like FF_REQUIRE_PROP, but throws a c++ exception
+#define FF_REQUIRE_PROP_CPPEXCEPT(ff_obj, ff_prop)													\
+	if (!FF_HAS(ff_obj, ff_prop)) {																	\
+		FF_THROWCPP("object has no property: " + std::string(ff_prop));	\
+	}
+
 #define FF_REQUIRE_PROP_TYPE(ff_obj, ff_prop, ff_ffType)																							\
 	if (!ff_ffType.checkType(FF_GET(ff_obj, ff_prop))) {																								\
 		FF_THROWTYPE("expected property: " + std::string(ff_prop) + " to be of type: " + ff_ffType.typeName);	\
+	}
+
+#define FF_REQUIRE_PROP_TYPE_CPPEXCEPT(ff_obj, ff_prop, ff_ffType)																							\
+	if (!ff_ffType.checkType(FF_GET(ff_obj, ff_prop))) {																								\
+		FF_THROWCPP("expected property: " + std::string(ff_prop) + " to be of type: " + ff_ffType.typeName);	\
 	}
 
 #define FF_REQUIRE_PROP_INSTANCE(ff_obj, ff_prop, ctor, clazz)																							\
@@ -27,6 +38,13 @@
 	FF_REQUIRE_PROP(ff_obj, ff_prop)													\
 	FF_REQUIRE_PROP_TYPE(ff_obj, ff_prop, ff_ffType)					\
 	ff_var = ff_ffType.cast(FF_GET(ff_obj, ff_prop));
+
+/* get js prop, throw c++ exception if undefined or invalid type */
+#define FF_GET_REQUIRED_CPPEXCEPT(ff_obj, ff_var, ff_prop, ff_ffType)	\
+	FF_REQUIRE_PROP_CPPEXCEPT(ff_obj, ff_prop)													\
+	FF_REQUIRE_PROP_TYPE_CPPEXCEPT(ff_obj, ff_prop, ff_ffType)					\
+	ff_var = ff_ffType.cast(FF_GET(ff_obj, ff_prop));
+
 
 /* unpack ff_object, throw if undefined or not instance */
 #define FF_GET_INSTANCE_REQUIRED(ff_obj, ff_var, ff_prop, ctor, unwrapper, clazz)	\
@@ -50,12 +68,24 @@
 
 /* getters - native types */
 #define FF_GET_BOOL_REQUIRED(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED(ff_obj, ff_var, ff_prop, ff_bool)
+#define FF_GET_FLOAT_REQUIRED(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED(ff_obj, ff_var, ff_prop, ff_float)
 #define FF_GET_NUMBER_REQUIRED(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED(ff_obj, ff_var, ff_prop, ff_number)
 #define FF_GET_UINT_REQUIRED(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED(ff_obj, ff_var, ff_prop, ff_uint)
 #define FF_GET_INT_REQUIRED(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED(ff_obj, ff_var, ff_prop, ff_int)
 #define FF_GET_STRING_REQUIRED(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED(ff_obj, ff_var, ff_prop, ff_string)
 #define FF_GET_ARRAY_REQUIRED(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED(ff_obj, ff_var, ff_prop, ff_array_type)
 #define FF_GET_OBJ_REQUIRED(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED(ff_obj, ff_var, ff_prop, ff_obj_type)
+
+/* getters - native types - cpp exceptions*/
+#define FF_GET_BOOL_REQUIRED_CPPEXCEPT(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED_CPPEXCEPT(ff_obj, ff_var, ff_prop, ff_bool)
+#define FF_GET_FLOAT_REQUIRED_CPPEXCEPT(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED_CPPEXCEPT(ff_obj, ff_var, ff_prop, ff_float)
+#define FF_GET_NUMBER_REQUIRED_CPPEXCEPT(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED_CPPEXCEPT(ff_obj, ff_var, ff_prop, ff_number)
+#define FF_GET_UINT_REQUIRED_CPPEXCEPT(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED_CPPEXCEPT(ff_obj, ff_var, ff_prop, ff_uint)
+#define FF_GET_INT_REQUIRED_CPPEXCEPT(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED_CPPEXCEPT(ff_obj, ff_var, ff_prop, ff_int)
+#define FF_GET_STRING_REQUIRED_CPPEXCEPT(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED_CPPEXCEPT(ff_obj, ff_var, ff_prop, ff_string)
+#define FF_GET_ARRAY_REQUIRED_CPPEXCEPT(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED_CPPEXCEPT(ff_obj, ff_var, ff_prop, ff_array_type)
+#define FF_GET_OBJ_REQUIRED_CPPEXCEPT(ff_obj, ff_var, ff_prop) FF_GET_REQUIRED_CPPEXCEPT(ff_obj, ff_var, ff_prop, ff_obj_type)
+
 
 #define FF_GET_BOOL_IFDEF(ff_obj, ff_var, ff_prop, defaultValue) FF_GET_IFDEF(ff_obj, ff_var, ff_prop, ff_bool, defaultValue)
 #define FF_GET_NUMBER_IFDEF(ff_obj, ff_var, ff_prop, defaultValue) FF_GET_IFDEF(ff_obj, ff_var, ff_prop, ff_number, defaultValue)
