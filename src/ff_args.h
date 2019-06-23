@@ -7,9 +7,14 @@
 
 #define FF_HAS_ARG(ff_argN) ( ff_argN < info.Length() )
 
+#define FF_REQUIRE_INFO_LENGTH(ff_argN)                                                                           \
+  if(ff_argN != info.Length()) {                                                                                  \
+    FF_THROW("expected info length to be " + std::to_string(ff_argN) + ", but is " + std::to_string(info.Length()) ); \
+  }
+
 #define FF_REQUIRE_ARG_TYPE(ff_argN, ff_type, orThrow)																						\
   if (orThrow || !ff_type.checkType(info[ff_argN])) {																						\
-    FF_THROW("expected arg " + std::to_string(ff_argN) + " to be of type: " + ff_type.typeName);	\
+    FF_THROWTYPE("expected arg " + std::to_string(ff_argN) + " to be of type: " + ff_type.typeName);	\
   }
 
 #define FF_ARG(ff_argN, ff_var, ff_type)											\
@@ -22,7 +27,7 @@
 
 #define FF_ARG_INSTANCE(ff_argN, ff_var, ctor, unwrapper)																									\
   if (!FF_HAS_ARG(ff_argN) || !FF_IS_INSTANCE(ctor, info[ff_argN])) {																			\
-    FF_THROW("expected arg " + std::to_string(ff_argN) + " to be instance of: " + std::string(#ctor));	\
+    FF_THROWTYPE("expected arg " + std::to_string(ff_argN) + " to be instance of: " + std::string(#ctor));	\
   }																																																	\
   ff_var = unwrapper(info[ff_argN]->ToObject(Nan::GetCurrentContext()).ToLocalChecked());
 
@@ -32,19 +37,23 @@
 /* aliases */
 #define FF_ARG_BOOL(ff_argN, ff_var) FF_ARG(ff_argN, ff_var, ff_bool)
 #define FF_ARG_NUMBER(ff_argN, ff_var) FF_ARG(ff_argN, ff_var, ff_number)
+#define FF_ARG_FLOAT(ff_argN, ff_var) FF_ARG(ff_argN, ff_var, ff_float)
 #define FF_ARG_UINT(ff_argN, ff_var) FF_ARG(ff_argN, ff_var, ff_uint)
 #define FF_ARG_INT(ff_argN, ff_var) FF_ARG(ff_argN, ff_var, ff_int)
 #define FF_ARG_STRING(ff_argN, ff_var) FF_ARG(ff_argN, ff_var, ff_string)
 #define FF_ARG_ARRAY(ff_argN, ff_var) FF_ARG(ff_argN, ff_var, ff_array_type)
 #define FF_ARG_OBJ(ff_argN, ff_var) FF_ARG(ff_argN, ff_var, ff_obj_type)
+#define FF_ARG_FUNC(ff_argN, ff_var) FF_ARG(ff_argN, ff_var, ff_func_type)
 
 #define FF_ARG_BOOL_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_bool, ff_defaultValue)
 #define FF_ARG_NUMBER_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_number, ff_defaultValue)
+#define FF_ARG_FLOAT_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_float, ff_defaultValue)
 #define FF_ARG_UINT_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_uint, ff_defaultValue)
 #define FF_ARG_INT_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_int, ff_defaultValue)
 #define FF_ARG_STRING_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_string, ff_defaultValue)
 #define FF_ARG_ARRAY_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_array_type, ff_defaultValue)
 #define FF_ARG_OBJ_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_obj_type, ff_defaultValue)
+#define FF_ARG_FUNC_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_IFDEF(ff_argN, ff_var, ff_func_type, ff_defaultValue)
 
 /* unpack array args */
 #define FF_ARG_UNPACK_ARRAY_TO(ff_argN, vec, ffType)	\
@@ -72,7 +81,8 @@
 
 #define FF_ARG_UNPACK_BOOL_ARRAY(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY(ff_argN, ff_var, bool, ff_bool)
 #define FF_ARG_UNPACK_NUMBER_ARRAY(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY(ff_argN, ff_var, double, ff_number)
-#define FF_ARG_UNPACK_UINT_ARRAY(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY(ff_argN, ff_var, uint, ff_uint)
+#define FF_ARG_UNPACK_FLOAT_ARRAY(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY(ff_argN, ff_var, float, ff_float)
+#define FF_ARG_UNPACK_UINT_ARRAY(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY(ff_argN, ff_var, unsigned int, ff_uint)
 #define FF_ARG_UNPACK_INT_ARRAY(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY(ff_argN, ff_var, int, ff_int)
 #define FF_ARG_UNPACK_STRING_ARRAY(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY(ff_argN, ff_var, std::string, ff_string)
 #define FF_ARG_UNPACK_ARRAY_ARRAY(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY(ff_argN, ff_var, FF_ARR, ff_array_type)
@@ -80,6 +90,7 @@
 
 #define FF_ARG_UNPACK_BOOL_ARRAY_TO(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY_TO(ff_argN, ff_var, ff_bool)
 #define FF_ARG_UNPACK_NUMBER_ARRAY_TO(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY_TO(ff_argN, ff_var, ff_number)
+#define FF_ARG_UNPACK_FLOAT_ARRAY_TO(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY_TO(ff_argN, ff_var, ff_float)
 #define FF_ARG_UNPACK_UINT_ARRAY_TO(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY_TO(ff_argN, ff_var, ff_uint)
 #define FF_ARG_UNPACK_INT_ARRAY_TO(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY_TO(ff_argN, ff_var, ff_int)
 #define FF_ARG_UNPACK_STRING_ARRAY_TO(ff_argN, ff_var) FF_ARG_UNPACK_ARRAY_TO(ff_argN, ff_var, ff_string)
@@ -88,7 +99,8 @@
 
 #define FF_ARG_UNPACK_BOOL_ARRAY_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(ff_argN, ff_var, bool, ff_bool, ff_defaultValue)
 #define FF_ARG_UNPACK_NUMBER_ARRAY_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(ff_argN, ff_var, double, ff_number, ff_defaultValue)
-#define FF_ARG_UNPACK_UINT_ARRAY_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(ff_argN, ff_var, uint, ff_uint, ff_defaultValue)
+#define FF_ARG_UNPACK_FLOAT_ARRAY_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(ff_argN, ff_var, float, ff_float, ff_defaultValue)
+#define FF_ARG_UNPACK_UINT_ARRAY_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(ff_argN, ff_var, unsigned int, ff_uint, ff_defaultValue)
 #define FF_ARG_UNPACK_INT_ARRAY_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(ff_argN, ff_var, int, ff_int, ff_defaultValue)
 #define FF_ARG_UNPACK_STRING_ARRAY_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(ff_argN, ff_var, std::string, ff_string, ff_defaultValue)
 #define FF_ARG_UNPACK_ARRAY_ARRAY_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_IFDEF(ff_argN, ff_var, FF_ARR, ff_array_type, ff_defaultValue)
@@ -96,6 +108,7 @@
 
 #define FF_ARG_UNPACK_BOOL_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_bool, ff_defaultValue)
 #define FF_ARG_UNPACK_NUMBER_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_number, ff_defaultValue)
+#define FF_ARG_UNPACK_FLOAT_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_float, ff_defaultValue)
 #define FF_ARG_UNPACK_UINT_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_uint, ff_defaultValue)
 #define FF_ARG_UNPACK_INT_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_int, ff_defaultValue)
 #define FF_ARG_UNPACK_STRING_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_defaultValue) FF_ARG_UNPACK_ARRAY_TO_IFDEF(ff_argN, ff_var, ff_string, ff_defaultValue)
