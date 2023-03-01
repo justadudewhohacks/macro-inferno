@@ -15,6 +15,6 @@
   "dependencies": {
     "chai": "^4.2.0",
     "macro-inferno": "file:..",
-    "mocha": "^5.2.0"
+    "mocha": "^10.2.0"
   }
 }
